@@ -1,0 +1,32 @@
+#src/USMB/SNMPBundle/Resources/config/services.yml
+
+services:
+
+  usmbsnmp_monitor:
+    class: USMB\SNMPBundle\Services\Monitoring\Monitor
+    arguments:
+      $entityManager: '@doctrine.orm.entity_manager'
+      $old_sound_rabbit_mq: '@old_sound_rabbit_mq.monitoring_producer'
+      $logger: '@monolog.logger.db'
+
+  usmbsnmp_snmp_consumer:
+    class: USMB\SNMPBundle\Services\Monitoring\SNMPRequestConsumer
+    arguments:
+      $logging_service: '@usmbsnmp_logging'
+
+  usmbsnmp_icmp_consumer:
+    class: USMB\SNMPBundle\Services\Monitoring\ICMPRequestConsumer
+    arguments:
+      $logging_service: '@usmbsnmp_logging'
+
+  usmbsnmp_logging:
+    class: USMB\SNMPBundle\Services\Logging\Logging
+    arguments:
+      $entityManager: '@doctrine.orm.entity_manager'
+      $logger: '@monolog.logger.db'
+
+  usmbsnmp_config:
+    class: USMB\SNMPBundle\Services\Config\Config
+    arguments:
+      $entityManager: '@doctrine.orm.entity_manager'
+      $logging_service: '@usmbsnmp_logging'

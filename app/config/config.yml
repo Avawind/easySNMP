@@ -1,0 +1,130 @@
+imports:
+- { resource: parameters.yml }
+- { resource: security.yml }
+- { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+  locale: en
+
+framework:
+  #esi: ~
+  #translator: { fallbacks: ['%locale%'] }
+  secret: '%secret%'
+  router:
+    resource: '%kernel.project_dir%/app/config/routing.yml'
+    strict_requirements: ~
+  form: ~
+  csrf_protection: ~
+  validation: { enable_annotations: true }
+  #serializer: { enable_annotations: true }
+  templating:
+    engines: ['twig']
+  default_locale: '%locale%'
+  trusted_hosts: ~
+  session:
+    # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+    handler_id: session.handler.native_file
+    save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+  fragments: ~
+  http_method_override: true
+  assets: ~
+  php_errors:
+    log: true
+
+# Twig Configuration
+twig:
+  debug: '%kernel.debug%'
+  strict_variables: '%kernel.debug%'
+
+# Doctrine Configuration
+doctrine:
+  dbal:
+    driver: pdo_mysql
+    host: '%database_host%'
+    port: '%database_port%'
+    dbname: '%database_name%'
+    user: '%database_user%'
+    password: '%database_password%'
+    charset: UTF8
+    keep_slave: true
+    # if using pdo_sqlite as your database driver:
+    #   1. add the path in parameters.yml
+    #     e.g. database_path: "%kernel.project_dir%/var/data/data.sqlite"
+    #   2. Uncomment database_path in parameters.yml.dist
+    #   3. Uncomment next line:
+    #path: '%database_path%'
+
+  orm:
+    auto_generate_proxy_classes: '%kernel.debug%'
+    naming_strategy: doctrine.orm.naming_strategy.underscore
+    auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+  transport: '%mailer_transport%'
+  host: '%mailer_host%'
+  username: '%mailer_user%'
+  password: '%mailer_password%'
+  spool: { type: memory }
+
+fos_user:
+  db_driver: orm
+  firewall_name: main
+  user_class: USMB\UserBundle\Entity\User
+  from_email:
+    address: "%mailer_user%"
+    sender_name: "%mailer_user%"
+
+old_sound_rabbit_mq:
+  connections:
+    default:
+      host: 'localhost'
+      port: 5672
+      user: 'rabbitmq'
+      password: 'rabbitmq'
+      vhost: '/'
+      lazy: false
+      connection_timeout: 3
+      read_write_timeout: 3
+
+      # requires php-amqplib v2.4.1+ and PHP5.4+
+      keepalive: false
+
+      # requires php-amqplib v2.4.1+
+      heartbeat: 0
+
+      #requires php_sockets.dll
+      use_socket: false # default false
+
+    another:
+      # A different (unused) connection defined by an URL. One can omit all parts,
+      # except the scheme (amqp:). If both segment in the URL and a key value (see above)
+      # are given the value from the URL takes precedence.
+      # See https://www.rabbitmq.com/uri-spec.html on how to encode values.
+      url: 'amqp://guest:password@localhost:5672/vhost?lazy=1&connection_timeout=6'
+  producers:
+    monitoring:
+      connection: default
+      exchange_options: {name: 'monitoring-producer', type: direct}
+  consumers:
+    snmp_request_queue:
+      connection: default
+      exchange_options: {name: 'snmp_request_queue', type: direct}
+      queue_options: {name: 'snmp_request_queue', routing_key: snmp_request_queue}
+      callback: usmbsnmp_snmp_consumer
+    icmp_request_queue:
+      connection: default
+      exchange_options: {name: 'icmp_request_queue', type: direct}
+      queue_options: {name: 'icmp_request_queue', routing_key: icmp_request_queue}
+      callback: usmbsnmp_icmp_consumer
+
+
+monolog:
+  channels: ['db']
+  handlers:
+    db:
+      channels: ['db']
+      type: service
+      id: monolog.db_handler

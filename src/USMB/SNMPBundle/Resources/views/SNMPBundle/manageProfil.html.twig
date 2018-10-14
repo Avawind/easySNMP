@@ -1,0 +1,85 @@
+{# src/USMB/SNMPBundle/Resources/views/SNMPBundle/manageProfil.html.twig #}
+
+{% extends "USMBSNMPBundle::layout.html.twig" %}
+
+{% block activeManageProfiles %} active {% endblock %}
+
+{% block body %}
+    <div class="container col-lg-8 col-md-10 col-sm-12">
+    <div class="card bg-light mb-3">
+        <div class="card-header">Add profile :</div>
+        <div class="card-body">
+            {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'true'} }) }}
+
+            {# Les erreurs générales du formulaire. #}
+            {{ form_errors(form) }}
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    {# Génération du label. #}
+                    {{ form_label(form.name, "Name") }}
+                    {# Génération de l'input. #}
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Profile Name','required': 'true'} }) }}
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please choose a profile name.
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    {# Génération du label. #}
+                    {{ form_label(form.oid, "OID") }}
+                    {# Génération de l'input. #}
+                    {{ form_widget(form.oid, {'attr': {'class': 'form-control', 'placeholder': 'OID/Fully qualified name', 'required': 'true' } }) }}
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please choose a OID name.
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    {# Génération du label. #}
+                    {{ form_label(form.type, "Type") }}
+                    {# Génération de l'input. #}
+                    {{ form_widget(form.type, {'attr': {'class': 'form-control', 'required': 'true'} }) }}
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please choose a return type.
+                    </div>
+                </div>
+                {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'} }) }}
+
+                {{ form_rest(form) }}
+
+                {# Fermeture de la balise <form> du formulaire HTML #}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    {% block scripts %}
+        <script>
+            //JavaScript for disabling form submissions if there are invalid fields
+            (function () {
+                'use strict';
+                window.addEventListener('load', function () {
+                    // Fetch all the forms we want to apply custom validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
+        </script>
+    {% endblock %}
+{% endblock %}

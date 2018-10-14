@@ -1,0 +1,48 @@
+{# src/USMB/SNMPBundle/Resources/views/SNMPBundle/manageDevices.html.twig #}
+
+{% extends "USMBSNMPBundle::layout.html.twig" %}
+
+{% block activeManageDevices %} active {% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <h1 class="h2">Devices</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{{ path('usmbsnmp_manage_device', { 'id': 'create' }) }}" class="btn btn-sm btn-outline-secondary"
+               role="button"><span data-feather="plus"></span> Add device</a>
+        </div>
+    </div>
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Hostname</th>
+            <th scope="col">Emplacement</th>
+            <th scope="col">Community</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for device in devices %}
+            <tr>
+                <th scope="row">{{ device.id }}</th>
+                <td class="vertMiddle">{{ device.name }}</td>
+                <td class="vertMiddle">{{ device.host }}</td>
+                <td class="vertMiddle">{{ device.location }}</td>
+                <td class="vertMiddle">{{ device.community }}</td>
+                <td class="vertMiddle"><a href="{{ path('usmbsnmp_manage_device', { 'id': device.id }) }}"
+                                          class="btn btn-primary btn-sm"
+                                          role="button"><span data-feather="edit-2"></span></a></td>
+                <td class="vertMiddle"><a href="{{ path('usmbsnmp_delete_device', { 'id': device.id }) }}"
+                                          class="btn btn-danger btn-sm"
+                                          role="button"
+                                          onclick="return confirm('Are you sure you want to delete this item?');"><span
+                                data-feather="trash-2"></span></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{# src/USMB/SNMPBundle/Resources/views/SNMPBundle/devices.html.twig #}
+
+{% extends "USMBSNMPBundle::layout.html.twig" %}
+
+{% block activeDevices %} active {% endblock %}
+
+{% block body %}
+    <h2>Devices</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Host</th>
+                <th scope="col">Emplacement</th>
+                <th scope="col">Community</th>
+                <th scope="col">isAlive</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for device in devices %}
+                <tr>
+                    <th scope="row">{{ device.id }}</th>
+                    <td>{{ device.name }}</td>
+                    <td>{{ device.host }}</td>
+                    <td>{{ device.location }}</td>
+                    <td>{{ device.community }}</td>
+                    <td><a href="{{ path('usmbsnmp_device', { 'id': device.id }) }}"
+                           class="btn {% if device.isAlive %}btn-success{% else %}btn-danger{% endif %} btn-sm"
+                           role="button">
+                            <span
+                                    data-feather="{% if device.isAlive %}activity{% else %}alert-triangle{% endif %}">
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

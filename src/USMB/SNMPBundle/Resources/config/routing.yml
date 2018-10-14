@@ -1,0 +1,71 @@
+#src/USMB/SNMPBundle/Resources/config/routing.yml
+
+#dashboard
+usmbsnmp_dashboard:
+    path:     /
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:dashboard }
+
+#devices
+usmbsnmp_devices:
+    path:     /Devices
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:devices }
+
+#device
+usmbsnmp_device:
+    path:     /Device/{id}
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:device }
+
+#manage devices
+usmbsnmp_manage_devices:
+    path:     /Manage/Devices
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:manageDevices }
+
+#manage device
+usmbsnmp_manage_device:
+    path:     /Manage/Device/{id}
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:manageDevice }
+
+#delete device
+usmbsnmp_delete_device:
+    path:     /Delete/Device/{id}
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:deleteDevice }
+
+#manage profiles
+usmbsnmp_manage_profiles:
+    path:     /Manage/Profiles
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:manageProfiles }
+
+#manage profile
+usmbsnmp_manage_profile:
+    path:     /Manage/Profile/{id}
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:manageProfile }
+
+#delete profile
+usmbsnmp_delete_profile:
+    path:     /Delete/Device/{id}
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:deleteProfile }
+
+#manage logs
+usmbsnmp_manage_logs:
+    path:     /Manage/Logs
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:manageLogs }
+
+#manage log
+usmbsnmp_manage_log:
+    path:     /Manage/Log/{id}
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:manageLog }
+
+#manage users
+usmbsnmp_manage_users:
+    path:     /Manage/Users
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:manageUsers }
+
+#manage user
+usmbsnmp_manage_user:
+    path:     /Manage/User/{id}
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:manageUser }
+
+#delete user
+usmbsnmp_delete_user:
+    path:     /Delete/User/{id}
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:deleteUser }

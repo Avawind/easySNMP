@@ -1,0 +1,53 @@
+{# src/USMB/SNMPBundle/Resources/views/SNMPBundle/manageLogs.html.twig #}
+
+{% extends "USMBSNMPBundle::layout.html.twig" %}
+
+{% block activeManageLogs %} active {% endblock %}
+
+{% block body %}
+
+<div class="container col-lg-12 col-md-12 col-sm-12">
+    <div class="card bg-light mb-3">
+        <div class="card-header">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h3>System Logs :</h3>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button class="btn btn-sm btn-outline-secondary">24h</button>
+                        <button class="btn btn-sm btn-outline-secondary">1 Week</button>
+                        <button class="btn btn-sm btn-outline-secondary">1 Month</button>
+                    </div>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button class="btn btn-sm btn-outline-secondary">All</button>
+                        <button class="btn btn-sm btn-outline-secondary">Critical</button>
+                        <button class="btn btn-sm btn-outline-secondary">Error</button>
+                        <button class="btn btn-sm btn-outline-secondary">Info</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">Level</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col">Message</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for log_sys in logs_sys %}
+                    <tr class="{% if log_sys.level == 200 %}table-info{% elseif log_sys.level == 400 %}table-warning{% elseif log_sys.level == 500 %}table-danger{% endif %}">
+                        <th scope="row">{{ log_sys.levelName }}</th>
+                        <td class="vertMiddle">{{ log_sys.createdAt|date('Y-m-d H:i:s') }}</td>
+                        <td class="vertMiddle">{{ log_sys.message }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
