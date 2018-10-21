@@ -5,7 +5,94 @@
 {% block activeDevices %} active {% endblock %}
 
 {% block body %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{ device.name }}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="#"
+               class="btn {% if device.isAlive %}btn-success{% else %}btn-danger{% endif %} btn-sm"
+               role="button">
+                            <span
+                                    data-feather="{% if device.isAlive %}activity{% else %}alert-triangle{% endif %}">
+                            </span>
+            </a>
+        </div>
+    </div>
+    <div class="container row col-lg-12 col-md-12 col-sm-12">
+        {% for profileName,dataArray in data %}
+            {% if dataArray[0].result matches '/^\\d+$/' %}
+            {% else %}
+                {% set entry = dataArray | last %}
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">{{ profileName }}</div>
+                        <div class="card-body">
+                            Last value registered : <b> {{ entry.result }}</b>
+                            at {{ entry.createdAt | date('Y-m-d H:i:s') }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
 
-    in progress
+        {% for profileName,dataArray in data %}
+            {% if dataArray[0].result matches '/^\\d+$/' %}
+                <canvas id="{{ 'myChart_' ~ profileName }}" class="col-lg-6 col-md-6 col-sm-12"></canvas>
+                <script>
+                    var ctx = document.getElementById("{{ 'myChart_' ~ profileName }}").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: [ {% for data in dataArray %} "{{ data.createdAt | date('d/m H:i:s') }}",{% endfor %}],
+                            datasets: [{
+                                label: '{{ profileName }}',
+                                data: [{% for data in dataArray %} "{{ data.result }}",{% endfor %}],
+                                borderColor: getRandomRgb()
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            tooltips: {
+                                mode: 'index',
+                                intersect: false,
+                            },
+                            hover: {
+                                mode: 'nearest',
+                                intersect: true
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Date'
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Value'
+                                    }
+                                }]
+                            }
+                        }
+                    });
 
+                </script>
+
+                {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block css %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script>
+    function getRandomRgb() {
+        var num = Math.round(0xffffff * Math.random());
+        var r = num >> 16;
+        var g = num >> 8 & 255;
+        var b = num & 255;
+        return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+    }
+</script>
 {% endblock %}

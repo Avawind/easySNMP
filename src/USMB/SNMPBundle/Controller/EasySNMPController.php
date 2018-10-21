@@ -47,10 +47,20 @@ class EasySNMPController extends Controller
         //Tests :
         //$this->get('monolog.logger.db')->error('something wrong happened ! =( ');
         //$this->get('monolog.logger.db')->info('something  happened !');
-        $this->get('usmbsnmp_monitor')->monitoring();
+        //$this->get('usmbsnmp_monitor')->monitoring();
+
+
+        $this->em = $this->getDoctrine()->getEntityManager();
+        $reposioryDevice = $this->em->getRepository('USMBSNMPBundle:Device');
+
+        $nbDevices = $reposioryDevice->getNbHost();
+        $nbOnlineDevices = $reposioryDevice->getNbHostOnline();
+        $nbOfflineDevices = $nbDevices - $nbOnlineDevices;
 
         return $this->render('USMBSNMPBundle:SNMPBundle:dashboard.html.twig', array(
-            'result' => $result
+            'result' => $result,
+            'offline_device' => $nbOfflineDevices,
+            'online_device' => $nbOnlineDevices,
         ));
     }
 
@@ -77,7 +87,34 @@ class EasySNMPController extends Controller
      */
     public function deviceAction(Request $request, $id)
     {
-        return $this->render('@USMBSNMP/SNMPBundle/device.html.twig');
+        $this->em = $this->getDoctrine()->getEntityManager();
+        $repositoryDevice = $this->em->getRepository('USMBSNMPBundle:Device');
+
+        $device = $repositoryDevice->find($id);
+        $profiles = $device->getProfiles();
+
+        $data = array();
+
+        foreach ($profiles as $profile){
+            $repository = 'USMBSNMPBundle:Device_'  .$id. '_Profile_' .$profile->getId();
+            $repositoryData = $this->em->getRepository($repository);
+            $allRows = $repositoryData->findAll();
+            foreach ($allRows as $row){
+                $singleArray = array(
+                    'createdAt' => $row->getCreatedAt(),
+                    'result' => $row->getResult(),
+                );
+                $data[$profile->getName()] [] = $singleArray;
+
+            }
+
+        }
+
+        return $this->render('@USMBSNMP/SNMPBundle/device.html.twig', array(
+            'device' => $device,
+            'profiles' => $profiles,
+            'data' => $data,
+        ));
 
     }
 

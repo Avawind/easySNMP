@@ -5,9 +5,42 @@
 {% block activeDashboard %} active {% endblock %}
 
 {% block body %}
-
-
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <h1 class="h2">Dashboard</h1>
+    </div>
+    <div class="container row col-lg-12 col-md-12 col-sm-12">
+        <canvas id="myChart" class="col-lg-6 col-md-6 col-sm-12"></canvas>
+        <script>
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Online','Offline'],
+                    datasets: [{
+                        label: 'Hosts Status',
+                        data: [ {{ online_device }}, {{ offline_device }}],
+                        backgroundColor: [
+                            'rgba(0, 255, 0, 0.5)',
+                            'rgba(255, 0, 0, 0.5)'
+                        ]
+                    }]
+                },
+                options: {}
+            });
+        </script>
+    </div>
 
 {% endblock %}
-
+{% block css %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script>
+        function getRandomRgb() {
+            var num = Math.round(0xffffff * Math.random());
+            var r = num >> 16;
+            var g = num >> 8 & 255;
+            var b = num & 255;
+            return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+        }
+    </script>
+{% endblock %}
 

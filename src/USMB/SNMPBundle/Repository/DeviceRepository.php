@@ -17,12 +17,27 @@ class DeviceRepository extends \Doctrine\ORM\EntityRepository
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getNbHost() {
-         $query = $this->createQueryBuilder('l');
-         $query->select('COUNT(l)');
+    public function getNbHost()
+    {
+        $query = $this->createQueryBuilder('l');
+        $query->select('COUNT(l)');
 
         return $query->getQuery()->getSingleScalarResult();
     }
 
+    /**
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getNbHostOnline()
+    {
+        $query = $this->createQueryBuilder('l');
+        $query
+            ->where('l.isAlive = :param')
+            ->setParameter('param', true)
+            ->select('COUNT(l)');
 
+        return $query->getQuery()->getSingleScalarResult();
+    }
 }

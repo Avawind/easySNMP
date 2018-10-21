@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="device_1__profile_2")
  * @ORM\Entity(repositoryClass="USMB\SNMPBundle\Repository\Device_1_Profile_2Repository")
- * @ORM\HasLifecycleCallbacks()
  */
 class Device_1_Profile_2
 {
@@ -36,13 +35,6 @@ class Device_1_Profile_2
      */
     private $result;
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function onPrePersist()
-    {
-        $this->createdAt = new \DateTime();
-    }
 
     /**
      * Get id
@@ -102,3 +94,4 @@ class Device_1_Profile_2
         return $this->result;
     }
 }
+

@@ -1038,7 +1038,6 @@
     <column id="257" parent="241" name="isAlive">
       <Position>6</Position>
       <DataType>tinyint(1)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="258" parent="241" name="UNIQ_92FB68E5E237E06">
