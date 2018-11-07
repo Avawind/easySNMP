@@ -6,30 +6,31 @@
 
 {% block body %}
 
-<div class="container col-lg-12 col-md-12 col-sm-12">
+    <div class="container col-lg-12 col-md-12 col-sm-12">
     <div class="card bg-light mb-3">
         <div class="card-header">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                 <h3>System Logs :</h3>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
-                        <button class="btn btn-sm btn-outline-secondary">24h</button>
-                        <button class="btn btn-sm btn-outline-secondary">1 Week</button>
-                        <button class="btn btn-sm btn-outline-secondary">1 Month</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="setDelay(24)">24h</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="setDelay(168)">1 Week</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="setDelay(720)">30 Days</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="setDelay(0)">All</button>
                     </div>
                 </div>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
-                        <button class="btn btn-sm btn-outline-secondary">All</button>
-                        <button class="btn btn-sm btn-outline-secondary">Critical</button>
-                        <button class="btn btn-sm btn-outline-secondary">Error</button>
-                        <button class="btn btn-sm btn-outline-secondary">Info</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="setLevel(0)">All</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="setLevel(500)">Critical</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="setLevel(400)">Error</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="setLevel(200)">Info</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-striped table-sm">
+            <table id="table" class="table table-striped table-sm">
                 <thead>
                 <tr>
                     <th scope="col">Level</th>
@@ -39,7 +40,7 @@
                 </thead>
                 <tbody>
                 {% for log_sys in logs_sys %}
-                    <tr class="{% if log_sys.level == 200 %}table-info{% elseif log_sys.level == 400 %}table-warning{% elseif log_sys.level == 500 %}table-danger{% endif %}">
+                    <tr id="{{ "log_tr_" ~ log_sys.id }}" class="{% if log_sys.level == 200 %}table-info{% elseif log_sys.level == 400 %}table-warning{% elseif log_sys.level == 500 %}table-danger{% endif %}">
                         <th scope="row">{{ log_sys.levelName }}</th>
                         <td class="vertMiddle">{{ log_sys.createdAt|date('Y-m-d H:i:s') }}</td>
                         <td class="vertMiddle">{{ log_sys.message }}</td>
@@ -49,5 +50,39 @@
             </table>
         </div>
     </div>
+    <script>
+        var currentLevel = 0;
+        var currentDelay = 0;
+        var list = [];
+
+        {% for log_sys in logs_sys %}
+        this.list.push({
+            id : '{{ log_sys.id }}',
+            level : '{{ log_sys.level }}',
+            createdAt : '{{ log_sys.createdAt | date('U') }}',
+        });
+        {% endfor %}
+
+        function setDelay(delay){
+            this.currentDelay = delay*60*60*1000;
+            sortByTimeAndLevel();
+        }
+        function setLevel(level) {
+            this.currentLevel = level;
+            sortByTimeAndLevel();
+        }
+        function sortByTimeAndLevel(){
+            var now = Date.now();
+            for (var i = 0; i < this.list.length; i++) {
+                var tr_log = document.getElementById("log_tr_" + this.list[i].id);
+                if ((this.list[i].level == this.currentLevel || this.currentLevel == 0) && ((this.currentDelay + (this.list[i].createdAt * 1000)) > now || this.currentDelay == 0 )) {
+                    tr_log.classList.remove("hide");
+                }else{
+                    tr_log.classList.add("hide");
+                }
+
+            }
+        }
+    </script>
 
 {% endblock %}

@@ -51,10 +51,10 @@ class EasySNMPController extends Controller
 
 
         $this->em = $this->getDoctrine()->getEntityManager();
-        $reposioryDevice = $this->em->getRepository('USMBSNMPBundle:Device');
+        $repositoryDevice = $this->em->getRepository('USMBSNMPBundle:Device');
 
-        $nbDevices = $reposioryDevice->getNbHost();
-        $nbOnlineDevices = $reposioryDevice->getNbHostOnline();
+        $nbDevices = $repositoryDevice->getNbHost();
+        $nbOnlineDevices = $repositoryDevice->getNbHostOnline();
         $nbOfflineDevices = $nbDevices - $nbOnlineDevices;
 
         return $this->render('USMBSNMPBundle:SNMPBundle:dashboard.html.twig', array(

@@ -9,6 +9,10 @@ body {
     vertical-align: text-bottom;
 }
 
+.hide {
+    display: none;
+}
+
 /*
  * Sidebar
  */

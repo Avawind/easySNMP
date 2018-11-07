@@ -42,10 +42,10 @@
                     var myChart = new Chart(ctx, {
                         type: 'line',
                         data: {
-                            labels: [ {% for data in dataArray %} "{{ data.createdAt | date('d/m H:i:s') }}",{% endfor %}],
+                            labels: [ {% set i = 0 %}{% for data in dataArray  if i < 100 %} "{{ data.createdAt | date('d/m H:i:s') }}",{% set i = i + 1 %}{% endfor %}],
                             datasets: [{
                                 label: '{{ profileName }}',
-                                data: [{% for data in dataArray %} "{{ data.result }}",{% endfor %}],
+                                data: [{% set i = 0 %}{% for data in dataArray if i < 100 %} "{{ data.result }}",{% set i = i + 1 %}{% endfor %}],
                                 borderColor: getRandomRgb()
                             }]
                         },
