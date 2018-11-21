@@ -30,3 +30,12 @@ services:
     arguments:
       $entityManager: '@doctrine.orm.entity_manager'
       $logging_service: '@usmbsnmp_logging'
+      $securityToken: '@security.token_storage'
+      $formFactory: '@form.factory'
+      $userManager: '@fos_user.user_manager'
+      $createTable: '@usmbsnmp_createTable'
+
+  usmbsnmp_createTable:
+    class: USMB\SNMPBundle\Services\Config\CreateTableCommand
+    arguments:
+      $kernel: '@kernel'

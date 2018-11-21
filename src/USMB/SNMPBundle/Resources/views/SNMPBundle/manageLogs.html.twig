@@ -40,7 +40,7 @@
                 </thead>
                 <tbody>
                 {% for log_sys in logs_sys %}
-                    <tr id="{{ "log_tr_" ~ log_sys.id }}" class="{% if log_sys.level == 200 %}table-info{% elseif log_sys.level == 400 %}table-warning{% elseif log_sys.level == 500 %}table-danger{% endif %}">
+                    <tr data-level="{{ log_sys.level }}" data-created-at="{{ log_sys.createdAt | date('U') }}" id="{{ "log_tr_" ~ log_sys.id }}" class="{% if log_sys.level == 200 %}table-info{% elseif log_sys.level == 400 %}table-warning{% elseif log_sys.level == 500 %}table-danger{% endif %}">
                         <th scope="row">{{ log_sys.levelName }}</th>
                         <td class="vertMiddle">{{ log_sys.createdAt|date('Y-m-d H:i:s') }}</td>
                         <td class="vertMiddle">{{ log_sys.message }}</td>
@@ -55,13 +55,15 @@
         var currentDelay = 0;
         var list = [];
 
-        {% for log_sys in logs_sys %}
-        this.list.push({
-            id : '{{ log_sys.id }}',
-            level : '{{ log_sys.level }}',
-            createdAt : '{{ log_sys.createdAt | date('U') }}',
-        });
-        {% endfor %}
+        var trs = document.getElementsByTagName("tr");
+
+        for(var i=1;i<trs.length;i++){
+            this.list.push({
+                id : trs[i].id,
+                level : trs[i].dataset.level,
+                createdAt : trs[i].dataset.createdAt
+            });
+        }
 
         function setDelay(delay){
             this.currentDelay = delay*60*60*1000;
@@ -74,7 +76,7 @@
         function sortByTimeAndLevel(){
             var now = Date.now();
             for (var i = 0; i < this.list.length; i++) {
-                var tr_log = document.getElementById("log_tr_" + this.list[i].id);
+                var tr_log = document.getElementById(this.list[i].id);
                 if ((this.list[i].level == this.currentLevel || this.currentLevel == 0) && ((this.currentDelay + (this.list[i].createdAt * 1000)) > now || this.currentDelay == 0 )) {
                     tr_log.classList.remove("hide");
                 }else{

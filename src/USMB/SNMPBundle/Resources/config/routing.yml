@@ -42,7 +42,7 @@ usmbsnmp_manage_profile:
 
 #delete profile
 usmbsnmp_delete_profile:
-    path:     /Delete/Device/{id}
+    path:     /Delete/Profile/{id}
     defaults: { _controller: USMBSNMPBundle:EasySNMP:deleteProfile }
 
 #manage logs

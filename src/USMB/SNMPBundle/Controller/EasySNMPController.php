@@ -67,13 +67,12 @@ class EasySNMPController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * Return the devices list in the view (Discovery, not manage)
      */
     public function devicesAction(Request $request)
     {
-        $this->em = $this->getDoctrine()->getEntityManager();
-        $repositoryDevice = $this->em->getRepository('USMBSNMPBundle:Device');
-
-        $devices = $repositoryDevice->findAll();
+        $devices = $this->get('usmbsnmp_config')->retrieveAllEntries("USMBSNMPBundle:Device");
 
         return $this->render('@USMBSNMP/SNMPBundle/devices.html.twig', array(
             'devices' => $devices,
@@ -122,41 +121,34 @@ class EasySNMPController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * Return the devices list in the view (Manage, not discover)
+     *
      */
     public function manageDevicesAction(Request $request)
     {
-        $this->em = $this->getDoctrine()->getEntityManager();
-        $repositoryDevice = $this->em->getRepository('USMBSNMPBundle:Device');
 
-        $devices = $repositoryDevice->findAll();
+        $devices = $this->get('usmbsnmp_config')->retrieveAllEntries("USMBSNMPBundle:Device");
 
         return $this->render('@USMBSNMP/SNMPBundle/manageDevices.html.twig', array(
             'devices' => $devices,
         ));
     }
 
-
+    /**
+     * Call the function manageEntityAction in USMB\SNMPBundle\Services\Config
+     * Return the form of device in the view
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function manageDeviceAction(Request $request, $id)
     {
-        if ($id == "create") {
-            $device = new Device();
-        } else {
-            $this->em = $this->getDoctrine()->getEntityManager();
-            $repositoryDevice = $this->em->getRepository('USMBSNMPBundle:Device');
-            $device = $repositoryDevice->find($id);
+        $userName = $this->getUser()->getUsername();
+        $entityName = "Device";
+        $form = $this->get('usmbsnmp_config')->manageEntityAction($request, $id, $entityName, $userName);
 
-        }
-        $form = $this->get('form.factory')->create(DeviceType::class, $device);
-
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($device);
-            $em->flush();
-
-            $this->get('monolog.logger.db')->info('Device created or updated : '.$device->getName().' by '. $this->getUser()->getUsername());
-
-            return $this->redirectToRoute('usmbsnmp_manage_devices');
-        }
 
         return $this->render('USMBSNMPBundle:SNMPBundle:manageDevice.html.twig', array(
             'form' => $form->createView(),
@@ -169,18 +161,16 @@ class EasySNMPController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * To delete a device in Manage\Devices
+     *
      */
     public function deleteDeviceAction(Request $request, $id)
     {
-        $this->em = $this->getDoctrine()->getEntityManager();
-        $reposioryDevice = $this->em->getRepository('USMBSNMPBundle:Device');
 
-
-        $device = $reposioryDevice->findOneById($id);
-        $this->em->remove($device);
-        $this->em->flush();
-
-        $this->get('monolog.logger.db')->info('Device deleted : '.$device->getName().' by '. $this->getUser()->getUsername());
+        $entityName = "Device";
+        $userName = $this->getUser()->getUsername();
+        $this->get('usmbsnmp_config')->deleteEntityAction($id, $entityName, $userName);
 
         return $this->redirectToRoute('usmbsnmp_manage_devices');
 
@@ -189,13 +179,13 @@ class EasySNMPController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * Return the profiles list in the view
+     *
      */
     public function manageProfilesAction(Request $request)
     {
-        $this->em = $this->getDoctrine()->getEntityManager();
-        $repositoryProfile = $this->em->getRepository('USMBSNMPBundle:Profile');
-
-        $profiles = $repositoryProfile->findAll();
+        $profiles = $this->get('usmbsnmp_config')->retrieveAllEntries("USMBSNMPBundle:Profile");
 
         return $this->render('@USMBSNMP/SNMPBundle/manageProfils.html.twig', array(
             'profiles' => $profiles,
@@ -206,29 +196,17 @@ class EasySNMPController extends Controller
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * Call the function manageEntityAction in USMB\SNMPBundle\Services\Config
+     * Return the form of profile in the view
+     *
      */
     public function manageProfileAction(Request $request, $id)
     {
-        if ($id == "create") {
-            $profile = new Profile();
-        } else {
-            $this->em = $this->getDoctrine()->getEntityManager();
-            $repositoryProfile = $this->em->getRepository('USMBSNMPBundle:Profile');
-            $profile = $repositoryProfile->find($id);
+        $userName = $this->getUser()->getUsername();
+        $entityName = "Profile";
+        $form = $this->get('usmbsnmp_config')->manageEntityAction($id, $entityName, $userName);
 
-        }
-        $form = $this->get('form.factory')->create(ProfileType::class, $profile);
-
-
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($profile);
-            $em->flush();
-
-            $this->get('monolog.logger.db')->info('Profile created or updated : '.$profile->getName().' by '. $this->getUser()->getUsername());
-
-            return $this->redirectToRoute('usmbsnmp_manage_profiles');
-        }
 
         return $this->render('USMBSNMPBundle:SNMPBundle:manageProfil.html.twig', array(
             'form' => $form->createView(),
@@ -243,15 +221,18 @@ class EasySNMPController extends Controller
      */
     public function deleteProfileAction(Request $request, $id)
     {
-        $this->em = $this->getDoctrine()->getEntityManager();
-        $reposioryProfile = $this->em->getRepository('USMBSNMPBundle:Profile');
-
-
-        $profile = $reposioryProfile->findOneById($id);
-        $this->em->remove($profile);
-        $this->em->flush();
-
-        $this->get('monolog.logger.db')->info('Profile deleted : '.$profile->getName().' by '. $this->getUser()->getUsername());
+//        $this->em = $this->getDoctrine()->getEntityManager();
+//        $reposioryProfile = $this->em->getRepository('USMBSNMPBundle:Profile');
+//
+//
+//        $profile = $reposioryProfile->findOneById($id);
+//        $this->em->remove($profile);
+//        $this->em->flush();
+//
+//        $this->get('monolog.logger.db')->info('Profile deleted : '.$profile->getName().' by '. $this->getUser()->getUsername());
+        $entityName = "Profile";
+        $userName = $this->getUser()->getUsername();
+        $this->get('usmbsnmp_config')->deleteEntityAction($id, $entityName, $userName);
 
         return $this->redirectToRoute('usmbsnmp_manage_profiles');
 
@@ -260,12 +241,13 @@ class EasySNMPController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * Return logs in the view
+     *
      */
     public function manageLogsAction(Request $request)
     {
-        $this->em = $this->getDoctrine()->getEntityManager();
-        $reposioryLog = $this->em->getRepository('USMBSNMPBundle:Log');
-        $logs_sys = $reposioryLog->findAll();
+        $logs_sys = $this->get('usmbsnmp_config')->retrieveAllEntries("USMBSNMPBundle:Log");
 
 
         return $this->render('@USMBSNMP/SNMPBundle/manageLogs.html.twig', array(
@@ -285,11 +267,13 @@ class EasySNMPController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * Return the users list in the view
+     *
      */
     public function manageUsersAction(Request $request)
     {
-        $userManager = $this->get('fos_user.user_manager');
-        $users = $userManager->findUsers();
+        $users = $this->get('usmbsnmp_config')->retrieveUsers();
 
         return $this->render('@USMBSNMP/SNMPBundle/manageUsers.html.twig', array(
             'users' => $users,
@@ -300,6 +284,9 @@ class EasySNMPController extends Controller
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     *
+     *
      */
     public function manageUserAction(Request $request, $id)
     {
