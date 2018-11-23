@@ -7,6 +7,14 @@
 {% block body %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 class="h2">{{ device.name }}</h1>
+        <button class="btn btn-sm btn-outline-secondary" onclick="refresh()">Refresh</button>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary" onclick="setDelay(30)">30s</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="setDelay(60)">1min</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="setDelay(300)">5min</button>
+            </div>
+        </div>
         <div class="btn-toolbar mb-2 mb-md-0">
             <a href="#"
                class="btn {% if device.isAlive %}btn-success{% else %}btn-danger{% endif %} btn-sm"
@@ -15,7 +23,7 @@
                                     data-feather="{% if device.isAlive %}activity{% else %}alert-triangle{% endif %}">
                             </span>
             </a>
-        </div>
+            </div>
     </div>
     <div class="container row col-lg-12 col-md-12 col-sm-12">
         {% for profileName,dataArray in data %}
@@ -95,4 +103,52 @@
         return 'rgb(' + r + ', ' + g + ', ' + b + ')';
     }
 </script>
+{% endblock %}
+{% block scripts %}
+
+    <script>
+        var timedelay;
+        if (document.cookie != null) {
+            timedelay = document.cookie;
+        } else {
+            timedelay = 30000;
+        }
+        setTimeout(refresh, timedelay);
+
+        function setDelay(n) {
+            timedelay = n*1000;
+            setCookie();
+            refresh();
+        }
+
+        function refresh() {
+            location.reload(true);
+        }
+
+        function getCookie() {
+            var timedelay;
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(timedelay.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function setCookie() {
+            var d = new Date();
+            d.setTime(d.getTime() + (24*60*60*1000));
+            var expires = "expires="+ d.toUTCString();
+            document.cookie = timedelay + ";" + expires + ";path=/";
+        }
+
+
+    </script>
+
 {% endblock %}

@@ -36,6 +36,6 @@ services:
       $createTable: '@usmbsnmp_createTable'
 
   usmbsnmp_createTable:
-    class: USMB\SNMPBundle\Services\Config\CreateTableCommand
+    class: USMB\SNMPBundle\Services\Config\CreateTable
     arguments:
       $kernel: '@kernel'

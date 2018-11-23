@@ -47,7 +47,7 @@ class Logging
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function logSNMP($request_result, $deviceId, $profileId){
-        //Retrieve the log class, depending on device & profile's id
+        //Retrieve the log class, depend on device & profile id
         $entityName = "\USMB\SNMPBundle\Entity\Device_".$deviceId."_Profile_".$profileId;
 
         $entity = new $entityName();

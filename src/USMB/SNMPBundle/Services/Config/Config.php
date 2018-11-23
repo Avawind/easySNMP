@@ -48,7 +48,7 @@ class Config
     protected $userManager;
 
     /**
-     * @var CreateTableCommand $createTable
+     * @var CreateTable $createTable
      */
     protected $createTable;
 
@@ -59,9 +59,9 @@ class Config
      * @param TokenStorage $securityToken
      * @param FormFactory $formFactory
      * @param UserManager $userManager
-     * @param CreateTableCommand $createTable
+     * @param CreateTable $createTable
      */
-    public function __construct(Logging $logging_service, EntityManager $entityManager, TokenStorage $securityToken, FormFactory $formFactory, UserManager $userManager, CreateTableCommand $createTable)
+    public function __construct(Logging $logging_service, EntityManager $entityManager, TokenStorage $securityToken, FormFactory $formFactory, UserManager $userManager, CreateTable $createTable)
     {
         $this->logging_service = $logging_service;
         $this->entityManager = $entityManager;
@@ -108,6 +108,7 @@ class Config
      * @param $username
      * @return \Symfony\Component\Form\FormInterface
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      *
      *   // To create/manage a entity (Device or Profile) and add, return the form to manage entity
      */
@@ -138,16 +139,21 @@ class Config
             // Add a log in the table Logs
             $this->logging_service->logInfo($entityName.' created or updated : '.$entity->getName().' by '.$username);
 
-        }
+            if($entityName == "Device"){
+                $device = $entity;
+                if($device == null){
+                    $repositoryDevice = $this->entityManager->getRepository("USMBSNMPBundle:Device");
+                    $device = $repositoryDevice->find($id);
+                }
+                $profiles = $device->getProfiles();
 
-        if($entityName == "Device"){
-            $repositoryProfile = $this->entityManager->getRepository("USMBSNMPBundle:Profile");
-            $profiles = $repositoryProfile->findByDevice($entity);
-
-            foreach($profiles as $profile){
-                $this->createTable($id, $profile->getId(), $profile->getType());
+                foreach($profiles as $profile){
+                    $this->createTable->execute($device->getId(), $profile->getId(), $profile->getType());
+                }
             }
         }
+
+
 
         return $form;
     }

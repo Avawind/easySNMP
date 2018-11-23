@@ -5,6 +5,11 @@ usmbsnmp_dashboard:
     path:     /
     defaults: { _controller: USMBSNMPBundle:EasySNMP:dashboard }
 
+#dashboard data
+usmbsnmp_dashboard_data:
+    path:     /data
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:dashboardData }
+
 #devices
 usmbsnmp_devices:
     path:     /Devices
@@ -69,3 +74,4 @@ usmbsnmp_manage_user:
 usmbsnmp_delete_user:
     path:     /Delete/User/{id}
     defaults: { _controller: USMBSNMPBundle:EasySNMP:deleteUser }
+

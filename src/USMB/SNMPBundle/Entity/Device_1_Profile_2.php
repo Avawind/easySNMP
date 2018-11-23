@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Device_1_Profile_2
  *
- * @ORM\Table(name="device_1__profile_2")
+ * @ORM\Table(name="Device_1_Profile_2")
  * @ORM\Entity(repositoryClass="USMB\SNMPBundle\Repository\Device_1_Profile_2Repository")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -30,7 +30,7 @@ class Device_1_Profile_2
     private $createdAt;
 
     /**
-     * @var int
+     * @var integer
      *
      * @ORM\Column(name="result", type="integer")
      */
@@ -43,7 +43,7 @@ class Device_1_Profile_2
     {
         $this->createdAt = new \DateTime();
     }
-
+    
     /**
      * Get id
      *
@@ -56,10 +56,8 @@ class Device_1_Profile_2
 
     /**
      * Set createdAt
-     *
      * @param \DateTime $createdAt
-     *
-     * @return Device_1_Profile_2
+     * @return Device_1_Profile_2    
      */
     public function setCreatedAt($createdAt)
     {
@@ -79,11 +77,8 @@ class Device_1_Profile_2
     }
 
     /**
-     * Set result
-     *
-     * @param integer $result
-     *
-     * @return Device_1_Profile_2
+     * @param $result
+     * @return $this
      */
     public function setResult($result)
     {
@@ -95,7 +90,7 @@ class Device_1_Profile_2
     /**
      * Get result
      *
-     * @return int
+     * @return string
      */
     public function getResult()
     {

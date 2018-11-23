@@ -5,13 +5,13 @@ namespace USMB\SNMPBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Device_1_Profile_1
+ * Device_3_Profile_3
  *
- * @ORM\Table(name="Device_1_Profile_1")
- * @ORM\Entity(repositoryClass="USMB\SNMPBundle\Repository\Device_1_Profile_1Repository")
+ * @ORM\Table(name="Device_3_Profile_3")
+ * @ORM\Entity(repositoryClass="USMB\SNMPBundle\Repository\Device_3_Profile_3Repository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Device_1_Profile_1
+class Device_3_Profile_3
 {
     /**
      * @var int
@@ -57,7 +57,7 @@ class Device_1_Profile_1
     /**
      * Set createdAt
      * @param \DateTime $createdAt
-     * @return Device_1_Profile_1    
+     * @return Device_3_Profile_3    
      */
     public function setCreatedAt($createdAt)
     {

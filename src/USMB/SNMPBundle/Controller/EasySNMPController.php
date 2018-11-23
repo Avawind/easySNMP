@@ -16,11 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use USMB\SNMPBundle\Entity\Device;
-use USMB\SNMPBundle\Entity\Profile;
-use USMB\SNMPBundle\Form\DeviceType;
-use USMB\SNMPBundle\Form\ProfileType;
 use USMB\UserBundle\Entity\User;
 
 
@@ -49,7 +46,6 @@ class EasySNMPController extends Controller
         //$this->get('monolog.logger.db')->info('something  happened !');
         //$this->get('usmbsnmp_monitor')->monitoring();
 
-
         $this->em = $this->getDoctrine()->getEntityManager();
         $repositoryDevice = $this->em->getRepository('USMBSNMPBundle:Device');
 
@@ -62,6 +58,54 @@ class EasySNMPController extends Controller
             'offline_device' => $nbOfflineDevices,
             'online_device' => $nbOnlineDevices,
         ));
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function dashboardDataAction()
+    {
+
+        $login = "monitoring";
+        $password = "monitoring";
+        $url_queues = "http://127.0.0.1:15672/api/queues";
+        $url_consumer =  "http://127.0.0.1:15672/api/consumers";
+        $url_connections =  "http://127.0.0.1:15672/api/connections";
+
+        //Retrieve data in json
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url_queues);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        $output_queue = curl_exec($ch);
+        curl_setopt($ch, CURLOPT_URL, $url_consumer);
+        $output_consumer = curl_exec($ch);
+        curl_setopt($ch, CURLOPT_URL, $url_connections);
+        $output_connections = curl_exec($ch);
+        curl_close($ch);
+
+        $jsonResponse = array();
+
+        //Decode data
+        $result_queue = json_decode($output_queue);
+        $result_consumer = json_decode($output_consumer);
+        //Parse data and construct jsonResponse
+        foreach ($result_queue as $queue) {
+            $jsonResponse[$queue->name] = array(
+                "status" => $queue->state,
+                "node" => $queue->node,
+                "queued_messages" => $queue->messages,
+                "consumer_isAlive" => false
+            );
+        }
+        foreach ($result_consumer as $consumer) {
+            $queue_binding = $consumer->queue->name;
+            $jsonResponse[$queue_binding]["consumer_isAlive"] = true;
+        }
+
+
+        return new JsonResponse($jsonResponse);
     }
 
     /**
@@ -94,11 +138,11 @@ class EasySNMPController extends Controller
 
         $data = array();
 
-        foreach ($profiles as $profile){
-            $repository = 'USMBSNMPBundle:Device_'  .$id. '_Profile_' .$profile->getId();
+        foreach ($profiles as $profile) {
+            $repository = 'USMBSNMPBundle:Device_' . $id . '_Profile_' . $profile->getId();
             $repositoryData = $this->em->getRepository($repository);
             $allRows = $repositoryData->findAll();
-            foreach ($allRows as $row){
+            foreach ($allRows as $row) {
                 $singleArray = array(
                     'createdAt' => $row->getCreatedAt(),
                     'result' => $row->getResult(),
@@ -150,9 +194,13 @@ class EasySNMPController extends Controller
         $form = $this->get('usmbsnmp_config')->manageEntityAction($request, $id, $entityName, $userName);
 
 
-        return $this->render('USMBSNMPBundle:SNMPBundle:manageDevice.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        if ($request->isMethod('POST')) {
+            return $this->redirectToRoute('usmbsnmp_manage_devices');
+        } else {
+            return $this->render('USMBSNMPBundle:SNMPBundle:manageDevice.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
 
     }
 
@@ -200,17 +248,21 @@ class EasySNMPController extends Controller
      * Call the function manageEntityAction in USMB\SNMPBundle\Services\Config
      * Return the form of profile in the view
      *
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function manageProfileAction(Request $request, $id)
     {
         $userName = $this->getUser()->getUsername();
         $entityName = "Profile";
-        $form = $this->get('usmbsnmp_config')->manageEntityAction($id, $entityName, $userName);
+        $form = $this->get('usmbsnmp_config')->manageEntityAction($request, $id, $entityName, $userName);
 
-
-        return $this->render('USMBSNMPBundle:SNMPBundle:manageProfil.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        if ($request->isMethod('POST')) {
+            return $this->redirectToRoute('usmbsnmp_manage_profiles');
+        } else {
+            return $this->render('USMBSNMPBundle:SNMPBundle:manageProfil.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
     }
 
     /**
@@ -221,15 +273,6 @@ class EasySNMPController extends Controller
      */
     public function deleteProfileAction(Request $request, $id)
     {
-//        $this->em = $this->getDoctrine()->getEntityManager();
-//        $reposioryProfile = $this->em->getRepository('USMBSNMPBundle:Profile');
-//
-//
-//        $profile = $reposioryProfile->findOneById($id);
-//        $this->em->remove($profile);
-//        $this->em->flush();
-//
-//        $this->get('monolog.logger.db')->info('Profile deleted : '.$profile->getName().' by '. $this->getUser()->getUsername());
         $entityName = "Profile";
         $userName = $this->getUser()->getUsername();
         $this->get('usmbsnmp_config')->deleteEntityAction($id, $entityName, $userName);
@@ -248,7 +291,6 @@ class EasySNMPController extends Controller
     public function manageLogsAction(Request $request)
     {
         $logs_sys = $this->get('usmbsnmp_config')->retrieveAllEntries("USMBSNMPBundle:Log");
-
 
         return $this->render('@USMBSNMP/SNMPBundle/manageLogs.html.twig', array(
             'logs_sys' => $logs_sys,
@@ -328,7 +370,7 @@ class EasySNMPController extends Controller
             $userManager->updateUser($user);
 
 
-            $this->get('monolog.logger.db')->info('User created or updated : '.$user->getUsername().' by '. $this->getUser()->getUsername());
+            $this->get('monolog.logger.db')->info('User created or updated : ' . $user->getUsername() . ' by ' . $this->getUser()->getUsername());
 
             return $this->redirectToRoute('usmbsnmp_manage_users');
         }
@@ -343,6 +385,7 @@ class EasySNMPController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
+
     public function deleteUserAction(Request $request, $id)
     {
 
@@ -350,9 +393,10 @@ class EasySNMPController extends Controller
         $user = $userManager->findUser($id);
         $userManager->deleteUser($user);
 
-        $this->get('monolog.logger.db')->info('User deleted : '.$user->getUsername().' by '. $this->getUser()->getUsername());
+        $this->get('monolog.logger.db')->info('User deleted : ' . $user->getUsername() . ' by ' . $this->getUser()->getUsername());
 
         return $this->redirectToRoute('usmbsnmp_manage_users');
 
     }
+
 }
