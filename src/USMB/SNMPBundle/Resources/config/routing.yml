@@ -6,6 +6,16 @@ usmbsnmp_dashboard:
     defaults: { _controller: USMBSNMPBundle:EasySNMP:dashboard }
 
 #dashboard data
+usmbsnmp_start_consumer:
+    path:     //Consumer/Start/{id}
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:startConsumer }
+
+#dashboard start consumer
+usmbsnmp_stop_consumer:
+    path:     /Consumer/Stop/{id}
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:stopConsumer }
+
+#dashboard stop consumer
 usmbsnmp_dashboard_data:
     path:     /data
     defaults: { _controller: USMBSNMPBundle:EasySNMP:dashboardData }

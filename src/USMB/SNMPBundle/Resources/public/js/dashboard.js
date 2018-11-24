@@ -1,11 +1,24 @@
 /**
+ *------------------By Avawind le 22/11/2018--------------------------
+ * - Resumé : Script génération dynamique de contenu dashboard
  *
- * Script génération dynamique de contenu
- * By TF le 22/11/2018
+ * - Fonctionnement :  Interroge cycliquement l'api de rabbitmq Management plugin
+ *                     via le seveur web. Mise à disopsition d'un lien /data pour
+ *                     récuperer les données en json
+ *
+ *  1- First Call
+ *      Construit dynamiquement les div contenant les informations de Queue
+ *      Initialise le graphique des requêtes en queues
+ *
+ *  2- Update
+ *      Interroge cycliquement l'api mise à disposition sur /data
+ *      Parse le JSON et update les datasets du graphique
  *
  * */
 
-//Useful functions for the next part
+/**
+ * Useful functions for the next part
+ */
 function sleep(milliseconds) {
     var start = new Date().getTime();
     for (var i = 0; i < 1e7; i++) {
@@ -14,12 +27,14 @@ function sleep(milliseconds) {
         }
     }
 }
+
 function checkTime(i) {
     if (i < 10) {
         i = "0" + i;
     }
     return i;
 }
+
 function now() {
     var now = new Date();
     var h = now.getHours();
@@ -27,7 +42,7 @@ function now() {
     var s = now.getSeconds();
     m = checkTime(m);
     s = checkTime(s);
-    return h+":"+m+":"+s;
+    return h + ":" + m + ":" + s;
 }
 
 function getRandomRgb() {
@@ -59,14 +74,14 @@ var chartMessageQueued = Chart.Line(ctx, {
     data: {
         labels: [now()],
         datasets: [{
-            label: 'SNMP Request',
+            label: 'SNMP Requests Stacked',
             borderColor: snmp_color,
             backgroundColor: snmp_color,
             fill: false,
             data: [],
             yAxisID: 'y-axis-1'
         }, {
-            label: 'ICMP Request',
+            label: 'ICMP Requests Stacked',
             borderColor: icmp_color,
             backgroundColor: icmp_color,
             fill: false,
@@ -91,17 +106,18 @@ var chartMessageQueued = Chart.Line(ctx, {
             }]
         },
         elements: {
-            point:{
+            point: {
                 radius: 0
             }
         }
     }
 });
+
 /**
  * Let's do the trick :
  * Initial Request
  */
-//Retrieve the principal <div> when loading dashboard page
+//Retrieve the <div> element when loading dashboard page
 var content = document.getElementById("content");
 //XMLHttpRequest initialRequest when page is loaded
 var initialRequest = new XMLHttpRequest();
@@ -122,8 +138,27 @@ initialRequest.onload = function () {
             card.classList.add("card", "bg-light", "mb-1");
             var cardHeader = document.createElement("div");
             cardHeader.classList.add("card-header");
-            var cardHeaderContent = document.createTextNode("Queue : " + queue);
-            cardHeader.appendChild(cardHeaderContent);
+            if (!data[queue].consumer_isAlive) {
+                cardHeader.innerHTML = '<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2">' +
+                    '        <div>' + queue + '</div>' +
+                    '        <div class="btn-toolbar">' +
+                    '            <a href="/app_dev.php/Consumer/Start/' + queue + '" class="btn btn-sm btn-outline-secondary"' +
+                    '               role="button"><span data-feather="play"></span> Start Consumer</a>' +
+                    '        </div>' +
+                    '    </div>';
+            } else {
+                cardHeader.innerHTML = '<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2">' +
+                    '        <div>' + queue + '</div>' +
+                    '        <div class="btn-toolbar">' +
+                    '            <a href="/app_dev.php/Consumer/Stop/' + queue + '" class="btn btn-sm btn-outline-secondary"' +
+                    '               role="button"><span data-feather="pause"></span> Stop All Consumers</a>' +
+                    '        </div>' +
+                    '        <div class="btn-toolbar">' +
+                    '           <a href="/app_dev.php/Consumer/Start/'+ queue +'" class="btn btn-sm btn-outline-secondary"' +
+                    '           role="button"><span data-feather="plus"></span> Add Consumer</a>' +
+                    '        </div>' +
+                    '    </div>';
+            }
             var cardBody = document.createElement("div");
             cardBody.classList.add("card-body");
             if (data[queue].consumer_isAlive) {
@@ -134,13 +169,14 @@ initialRequest.onload = function () {
                 var consumer_status = "Down";
             }
             var cardBodyContent = document.createElement("div");
-            cardBodyContent.innerHTML = '<b> Satus : </b>' + data[queue].status + '     <b>Node : </b>' + data[queue].node + '<b>    Consumer : </b>' + consumer_status;
+            cardBodyContent.innerHTML = '<b> Satus : </b>' + data[queue].status + '     <b>Node : </b>' + data[queue].node + '<b>    Consumer : </b>' + consumer_status + '<b>    Nb : </b>' + data[queue].nb_consumer;
 
             cardBody.appendChild(cardBodyContent);
             card.appendChild(cardHeader);
             card.appendChild(cardBody);
             container.appendChild(card);
             content.appendChild(container);
+            feather.replace();
         }
 
         //Set first value
@@ -156,10 +192,10 @@ initialRequest.send();
 
 
 /**
- * Retrieve data dynamically and draw chart
+ * Retrieve data dynamically and update chart
  */
 function updateChart() {
-    // XMLHttpRequest initialRequest when page is loaded
+    // XMLHttpRequest periodicRequest when page is ready
     var periodicRequest = new XMLHttpRequest();
     periodicRequest.open('GET', 'https://' + ip + '/app_dev.php/data', true);
     //Send get request to api an retrieve the data :

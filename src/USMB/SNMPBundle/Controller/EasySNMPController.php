@@ -40,7 +40,6 @@ class EasySNMPController extends Controller
      */
     public function dashboardAction(Request $request)
     {
-        $result = 'nothing';
         //Tests :
         //$this->get('monolog.logger.db')->error('something wrong happened ! =( ');
         //$this->get('monolog.logger.db')->info('something  happened !');
@@ -54,23 +53,22 @@ class EasySNMPController extends Controller
         $nbOfflineDevices = $nbDevices - $nbOnlineDevices;
 
         return $this->render('USMBSNMPBundle:SNMPBundle:dashboard.html.twig', array(
-            'result' => $result,
             'offline_device' => $nbOfflineDevices,
-            'online_device' => $nbOnlineDevices,
+            'online_device' => $nbOnlineDevices
         ));
     }
 
     /**
+     * API RabbitMq Management
      * @return JsonResponse
      */
     public function dashboardDataAction()
     {
-
+        //Params
         $login = "monitoring";
         $password = "monitoring";
         $url_queues = "http://127.0.0.1:15672/api/queues";
         $url_consumer =  "http://127.0.0.1:15672/api/consumers";
-        $url_connections =  "http://127.0.0.1:15672/api/connections";
 
         //Retrieve data in json
         $ch = curl_init();
@@ -81,8 +79,6 @@ class EasySNMPController extends Controller
         $output_queue = curl_exec($ch);
         curl_setopt($ch, CURLOPT_URL, $url_consumer);
         $output_consumer = curl_exec($ch);
-        curl_setopt($ch, CURLOPT_URL, $url_connections);
-        $output_connections = curl_exec($ch);
         curl_close($ch);
 
         $jsonResponse = array();
@@ -96,16 +92,39 @@ class EasySNMPController extends Controller
                 "status" => $queue->state,
                 "node" => $queue->node,
                 "queued_messages" => $queue->messages,
-                "consumer_isAlive" => false
+                "consumer_isAlive" => false,
+                "nb_consumer" => 0
             );
         }
         foreach ($result_consumer as $consumer) {
             $queue_binding = $consumer->queue->name;
             $jsonResponse[$queue_binding]["consumer_isAlive"] = true;
+            $jsonResponse[$queue_binding]["nb_consumer"] = intval($jsonResponse[$queue_binding]["nb_consumer"]) + 1;
         }
 
 
         return new JsonResponse($jsonResponse);
+    }
+
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function startConsumerAction($id){
+        $path = str_replace('web','', getcwd());
+        exec("cd ".$path." && php bin/console rabbitmq:consumer ".$id."  > /dev/null &");
+        $this->get('usmbsnmp_logging')->logInfo("Dashboard Action : Consumer added by ".$this->getUser()->getUsername()." for ".$id);
+        return $this->redirectToRoute('usmbsnmp_dashboard');
+    }
+
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function stopConsumerAction($id){
+        exec('kill -9 `ps aux | less | grep \'rabbitmq:consumer '.$id.'\' | grep -v grep | awk \'{print $2}\'`');
+        $this->get('usmbsnmp_logging')->logCrit("Dashboard Action : All connections closed by ".$this->getUser()->getUsername());
+        return $this->redirectToRoute('usmbsnmp_dashboard');
     }
 
     /**

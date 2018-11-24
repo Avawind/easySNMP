@@ -93,4 +93,11 @@ class Logging
         $this->logger->info($error);
     }
 
+    /**
+     * @param $error
+     */
+    public function logCrit($error){
+        $this->logger->critical($error);
+    }
+
 }
