@@ -33,6 +33,11 @@ security:
         secret: %secret% # %secret% est un paramètre de parameter
 
   access_control:
+  - { path: ^/Manage/Profile, roles: ROLE_MODERATEUR }
+  - { path: ^/Manage/Device, roles: ROLE_MODERATEUR }
+  - { path: ^/Manage/Logs, roles: IS_AUTHENTICATED_FULLY }
   - { path: ^/Manage, roles: ROLE_ADMIN }
-  - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-  - { path: ^/, role: IS_AUTHENTICATED_FULLY }
+  - { path: ^/monitor$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+  - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+  - { path: ^/data$, roles: IS_AUTHENTICATED_FULLY }
+  - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

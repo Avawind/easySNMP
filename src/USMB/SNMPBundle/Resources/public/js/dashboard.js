@@ -1,5 +1,5 @@
 /**
- *------------------By Avawind le 22/11/2018--------------------------
+ *------------------By Avawind  22/11/2018--------------------------
  * - Resumé : Script génération dynamique de contenu dashboard
  *
  * - Fonctionnement :  Interroge cycliquement l'api de rabbitmq Management plugin
@@ -68,7 +68,7 @@ var snmp_color = getRandomRgb();
 var icmp_color = getRandomRgb();
 //Queues Chart
 //Retrieve chart's container element
-var ctx = document.getElementById("graph").getContext('2d');
+var ctx = document.getElementById("queue_graph").getContext('2d');
 //Load Chart
 var chartMessageQueued = Chart.Line(ctx, {
     data: {
@@ -101,7 +101,7 @@ var chartMessageQueued = Chart.Line(ctx, {
                 id: 'y-axis-1',
                 ticks: {
                     suggestedMin: 0,
-                    suggestedMax: 100
+                    suggestedMax: 20
                 }
             }]
         },
@@ -112,13 +112,34 @@ var chartMessageQueued = Chart.Line(ctx, {
         }
     }
 });
+/**
+ * Devices Chart
+ */
+//Retrieve chart's container element
+var ctx_1 = document.getElementById("device_status").getContext('2d');
+//Load Chart
+var deviceStatusChart = new Chart(ctx_1, {
+    type: 'doughnut',
+    data: {
+        labels: ['Online', 'Offline'],
+        datasets: [{
+            label: 'Hosts Status',
+            data: [],
+            backgroundColor: [
+                'rgb(40,167,69)',
+                'rgb(220,53,69)'
+            ]
+        }]
+    },
+    options: {}
+});
 
 /**
  * Let's do the trick :
  * Initial Request
  */
 //Retrieve the <div> element when loading dashboard page
-var content = document.getElementById("content");
+var content = document.getElementById("queues_info");
 //XMLHttpRequest initialRequest when page is loaded
 var initialRequest = new XMLHttpRequest();
 //Open a new connection, using the GET request on the URL endpoint
@@ -131,60 +152,73 @@ initialRequest.onload = function () {
     if (initialRequest.status >= 200 && initialRequest.status < 400) {
         //Process data
         for (var queue in data) {
-            //Create content pattern with bootstrap
-            var container = document.createElement("div");
-            container.classList.add("col-lg-12", "col-md-12", "col-sm-12");
-            var card = document.createElement("div");
-            card.classList.add("card", "bg-light", "mb-1");
-            var cardHeader = document.createElement("div");
-            cardHeader.classList.add("card-header");
-            if (!data[queue].consumer_isAlive) {
-                cardHeader.innerHTML = '<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2">' +
-                    '        <div>' + queue + '</div>' +
-                    '        <div class="btn-toolbar">' +
-                    '            <a href="/app_dev.php/Consumer/Start/' + queue + '" class="btn btn-sm btn-outline-secondary"' +
-                    '               role="button"><span data-feather="play"></span> Start Consumer</a>' +
-                    '        </div>' +
-                    '    </div>';
-            } else {
-                cardHeader.innerHTML = '<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2">' +
-                    '        <div>' + queue + '</div>' +
-                    '        <div class="btn-toolbar">' +
-                    '            <a href="/app_dev.php/Consumer/Stop/' + queue + '" class="btn btn-sm btn-outline-secondary"' +
-                    '               role="button"><span data-feather="pause"></span> Stop All Consumers</a>' +
-                    '        </div>' +
-                    '        <div class="btn-toolbar">' +
-                    '           <a href="/app_dev.php/Consumer/Start/'+ queue +'" class="btn btn-sm btn-outline-secondary"' +
-                    '           role="button"><span data-feather="plus"></span> Add Consumer</a>' +
-                    '        </div>' +
-                    '    </div>';
-            }
-            var cardBody = document.createElement("div");
-            cardBody.classList.add("card-body");
-            if (data[queue].consumer_isAlive) {
-                card.classList.add("border-success");
-                var consumer_status = "Running";
-            } else {
-                card.classList.add("border-danger");
-                var consumer_status = "Down";
-            }
-            var cardBodyContent = document.createElement("div");
-            cardBodyContent.innerHTML = '<b> Satus : </b>' + data[queue].status + '     <b>Node : </b>' + data[queue].node + '<b>    Consumer : </b>' + consumer_status + '<b>    Nb : </b>' + data[queue].nb_consumer;
+            if (queue !== "devices") {
+                //Create content pattern with bootstrap
+                //Div
+                var container = document.createElement("div");
+                container.classList.add("col-lg-12", "col-md-12", "col-sm-12", "mb-3");
+                //Card
+                var card = document.createElement("div");
+                card.classList.add("card", "bg-light");
+                //CardHeader
+                var cardHeader = document.createElement("div");
+                cardHeader.classList.add("card-header");
+                if (!data[queue].consumer_isAlive) {
+                    cardHeader.innerHTML = '<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2">' +
+                        '        <div>' + queue + '</div>' +
+                        '        <div class="btn-toolbar">' +
+                        '            <a href="/app_dev.php/Consumer/Start/' + queue + '" class="btn btn-sm btn-outline-secondary"' +
+                        '               role="button"><span data-feather="play"></span> Start Consumer</a>' +
+                        '        </div>' +
+                        '    </div>';
+                } else {
+                    cardHeader.innerHTML = '<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2">' +
+                        '        <div>' + queue + '</div>' +
+                        '        <div class="btn-toolbar">' +
+                        '            <a href="/app_dev.php/Consumer/Stop/' + queue + '" class="btn btn-sm btn-outline-secondary"' +
+                        '               role="button"><span data-feather="pause"></span> Stop All Consumers</a>' +
+                        '        </div>' +
+                        '        <div class="btn-toolbar">' +
+                        '           <a href="/app_dev.php/Consumer/Start/' + queue + '" class="btn btn-sm btn-outline-secondary"' +
+                        '           role="button"><span data-feather="plus"></span> Add Consumer</a>' +
+                        '        </div>' +
+                        '    </div>';
+                }
+                //Card Body
+                var cardBody = document.createElement("div");
+                cardBody.classList.add("card-body");
+                var consumer_status;
+                if (data[queue].consumer_isAlive) {
+                    card.classList.add("border-success");
+                    consumer_status = "Running";
+                } else {
+                    card.classList.add("border-danger");
+                    consumer_status = "Down";
+                }
+                var cardBodyContent = document.createElement("div");
+                cardBodyContent.innerHTML = '<b> Satus : </b>' + data[queue].status + '     <b>Node : </b>' + data[queue].node + '<b>    Consumer : </b>' + consumer_status + '<b>    Nb : </b>' + data[queue].nb_consumer;
 
-            cardBody.appendChild(cardBodyContent);
-            card.appendChild(cardHeader);
-            card.appendChild(cardBody);
-            container.appendChild(card);
-            content.appendChild(container);
-            feather.replace();
+                //Append Child in th right order
+                cardBody.appendChild(cardBodyContent);
+                card.appendChild(cardHeader);
+                card.appendChild(cardBody);
+                container.appendChild(card);
+                content.appendChild(container);
+                //reload icons
+                feather.replace();
+            }
+
         }
 
-        //Set first value
+        //Queue Chart : Init chart
         chartMessageQueued.data.labels.push(now());
         chartMessageQueued.data.datasets[0].data.push(data['snmp_request_queue'].queued_messages);
         chartMessageQueued.data.datasets[1].data.push(data['icmp_request_queue'].queued_messages);
-        console.log("initial update : " + data['snmp_request_queue'].queued_messages);
         chartMessageQueued.update();
+
+        //Device Chart : Init chart
+        deviceStatusChart.data.datasets[0].data.push(data['devices'].online, data['devices'].offline);
+        deviceStatusChart.update();
     }
 };
 //Send request
@@ -206,11 +240,17 @@ function updateChart() {
         var data = JSON.parse(response);
         if (periodicRequest.status >= 200 && periodicRequest.status < 400) {
             //Process data
+            //Queue Chart
             chartMessageQueued.data.labels.push(now());
             chartMessageQueued.data.datasets[0].data.push(data['snmp_request_queue'].queued_messages);
             chartMessageQueued.data.datasets[1].data.push(data['icmp_request_queue'].queued_messages);
             chartMessageQueued.update();
-            console.log("Request send & arrays pushed - Chart updated !");
+            //Devices Chart
+            deviceStatusChart.data.datasets[0].data[0] = data['devices'].online;
+            deviceStatusChart.data.datasets[0].data[1] = data['devices'].offline;
+            deviceStatusChart.update();
+            //Log to console
+            console.log("Request send & arrays pushed - Chart updated ! - SNMP : " + data['snmp_request_queue'].queued_messages + " - ICMP : " + data['icmp_request_queue'].queued_messages);
         }
     };
     //Send request

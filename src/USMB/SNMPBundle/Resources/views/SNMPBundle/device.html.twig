@@ -50,7 +50,7 @@
                     var myChart = new Chart(ctx, {
                         type: 'line',
                         data: {
-                            labels: [ {% set i = 0 %}{% for data in dataArray  if i < 100 %} "{{ data.createdAt | date('d/m H:i:s') }}",{% set i = i + 1 %}{% endfor %}],
+                            labels: [ {% set i = 0 %}{% for data in dataArray  if i < 100 %} "{{ data.createdAt | date('H:i:s') }}",{% set i = i + 1 %}{% endfor %}],
                             datasets: [{
                                 label: '{{ profileName }}',
                                 data: [{% set i = 0 %}{% for data in dataArray if i < 100 %} "{{ data.result }}",{% set i = i + 1 %}{% endfor %}],
@@ -71,14 +71,14 @@
                                 xAxes: [{
                                     display: true,
                                     scaleLabel: {
-                                        display: true,
+                                        display: false,
                                         labelString: 'Date'
                                     }
                                 }],
                                 yAxes: [{
                                     display: true,
                                     scaleLabel: {
-                                        display: true,
+                                        display: false,
                                         labelString: 'Value'
                                     }
                                 }]
@@ -147,8 +147,6 @@
             var expires = "expires="+ d.toUTCString();
             document.cookie = timedelay + ";" + expires + ";path=/";
         }
-
-
     </script>
 
 {% endblock %}

@@ -20,6 +20,11 @@ usmbsnmp_dashboard_data:
     path:     /data
     defaults: { _controller: USMBSNMPBundle:EasySNMP:dashboardData }
 
+#mlaunch monitoring
+usmbsnmp_monitor:
+    path:     /monitor
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:monitor }
+
 #devices
 usmbsnmp_devices:
     path:     /Devices

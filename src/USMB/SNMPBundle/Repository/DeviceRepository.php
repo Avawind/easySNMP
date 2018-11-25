@@ -13,7 +13,7 @@ class DeviceRepository extends \Doctrine\ORM\EntityRepository
 
 
     /**
-     * @return mixed
+     * @return int
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -26,7 +26,7 @@ class DeviceRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * @return mixed
+     * @return int
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -39,5 +39,29 @@ class DeviceRepository extends \Doctrine\ORM\EntityRepository
             ->select('COUNT(l)');
 
         return $query->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @return int
+     */
+    public function getNbRequestToSend()
+    {
+        $nbRequestToSend =0;
+
+        $query = $this->createQueryBuilder('l');
+        $query
+            ->where('l.isAlive = :param')
+            ->setParameter('param', true)
+            ->select('l');
+
+        $result = $query->getQuery()->getResult();
+
+        foreach ($result as $device){
+            foreach ($device->getProfiles() as $profile){
+                $nbRequestToSend++;
+            }
+        }
+
+        return $nbRequestToSend;
     }
 }

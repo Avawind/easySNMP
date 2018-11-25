@@ -39,3 +39,8 @@ services:
     class: USMB\SNMPBundle\Services\Config\CreateTable
     arguments:
       $kernel: '@kernel'
+
+  usmbsnmp_monitor_rabbit_server:
+    class: USMB\SNMPBundle\Services\Monitoring\RabbitServerMonitoring
+    arguments:
+     $entityManager: '@doctrine.orm.entity_manager'

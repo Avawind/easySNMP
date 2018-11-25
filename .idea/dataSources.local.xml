@@ -2,7 +2,7 @@
 <project version="4">
   <component name="dataSourceStorageLocal">
     <data-source name="easySNMPBDD@localhost" uuid="4a012d99-873d-4490-9642-7ba1e9363aa7">
-      <database-info product="MySQL" version="10.1.26-MariaDB-0+deb9u1" jdbc-version="4.2" driver-name="MariaDB connector/J" driver-version="2.2.1" family="MARIADB" exact-version="10.1.26">
+      <database-info product="MySQL" version="10.1.26-MariaDB-0+deb9u1" jdbc-version="4.2" driver-name="MariaDB connector/J" driver-version="2.2.1" dbms="MYSQL" exact-version="10.1.26">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
       </database-info>
@@ -12,7 +12,7 @@
       <introspection-schemas>*:@</introspection-schemas>
       <ssh-properties>
         <enabled>true</enabled>
-        <proxy-host>192.168.43.60</proxy-host>
+        <proxy-host>192.168.0.44</proxy-host>
         <secret-storage>master_key</secret-storage>
         <user>root</user>
         <use-password>true</use-password>

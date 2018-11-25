@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: tfoissard
+ * User: Avawind
  * Date: 27/09/2018
  * Time: 20:49
  */
@@ -20,42 +20,41 @@ class Monitor
 {
     /**
      * Manage entity
-     * @var EntityManager
+     * @var EntityManager $entityManager
      */
     protected $entityManager;
 
     /**
      * Queue producer
-     * @var Producer
+     * @var Producer $old_sound_rabbit_mq
      */
     protected $old_sound_rabbit_mq;
 
     /**
      * Log events
-     * @var Logger
+     * @var Logger $logger
      */
     protected $logger;
 
     /**
-     * Delay between two snmp request (Load Balancing)
-     * @var int
+     * Delay between two snmp request (Load Balancing) in seconds
+     * @var int $host_inter_check_delay
      *
      */
     private $host_inter_check_delay;
 
     /**
-     * Like 5 min
-     * @var int
+     * Like 2 min
+     * @var int $check_inter
      */
-    private $check_inter = 5;
+    private $check_inter = 2;
+
 
     /**
      * Monitor constructor.
      * @param EntityManager $entityManager
      * @param Producer $old_sound_rabbit_mq
      * @param Logger $logger
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function __construct(EntityManager $entityManager, Producer $old_sound_rabbit_mq, Logger $logger)
     {
@@ -67,25 +66,32 @@ class Monitor
 
 
     /**
-     *
+     * * * * * * * * * *
+     * Load Balancing  *
+     * * * * * * * * * *
      * Calculations of the inter_check delay when the monitoring module is called :
      *
      * host inter-check delay = (average check interval for all hosts) / (total number of hosts)
      *   average check interval for all hosts = (total host check interval) / (total number of hosts)
      *       total host check interval = (total check_interval of all hosts) * (check_interval)
      *
+     * In this calculation whe considerate that the snmp_request delay is nullable (LAN).
+     * To avoid queue problems let's said we take 10% of margin.
+     *
+     *
      * @source https://assets.nagios.com/downloads/nagioscore/docs/nagioscore/4/en/checkscheduling.html
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     *
+     * @return int $host_inter_check_delay
      */
-    private function interCheckDelayCalculation()
+    public function interCheckDelayCalculation()
     {
-
-        $nbHost = $this->entityManager->getRepository('USMBSNMPBundle:Device')->getNbHost();
-        $total_host_check_inter = $nbHost * $this->check_inter;
+        $nbRequestToSend = $this->entityManager->getRepository('USMBSNMPBundle:Device')->getNbRequestToSend();
+        $nbRequestToSend = $nbRequestToSend + $nbRequestToSend * 0.1;
+        $total_host_check_inter = $nbRequestToSend * $this->check_inter;
         $total_host_check_inter = $total_host_check_inter * 60;
-        $total_average_check_inter = $total_host_check_inter / $nbHost;
-        $host_inter_check_delay = $total_average_check_inter / $nbHost;
+        $total_average_check_inter = $total_host_check_inter / $nbRequestToSend;
+        $host_inter_check_delay = $total_average_check_inter / $nbRequestToSend;
+
 
         return $host_inter_check_delay;
     }
@@ -127,6 +133,7 @@ class Monitor
                 if($device->getIsAlive()) {
                     //Setup request
                     $requestSNMP = array(
+                        'inter_delay_check' => $this->host_inter_check_delay,
                         'idDevice' => $device->getId(),
                         'deviceName' => $device->getName(),
                         'idProfile' => $profile->getId(),
@@ -135,7 +142,6 @@ class Monitor
                         'community' => $device->getCommunity(),
                         'oid' => $profile->getOid()
                     );
-
                     //Send request params to queue
                     $this->old_sound_rabbit_mq->publish(serialize($requestSNMP), 'snmp_request_queue');
                     $SNMPRequestCounter++;
@@ -144,7 +150,6 @@ class Monitor
         }
 
         $this->logger->info("Monitor - monitoring() called : Request queued : " . $SNMPRequestCounter . " SNMP / ".$ICMPRequestCounter." ICMP");
-
 
     }
 }

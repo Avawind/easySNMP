@@ -9,45 +9,22 @@
         <h1 class="h2">Dashboard</h1>
     </div>
     <div class="container row col-lg-12 col-md-12 col-sm-12">
-        <div id="content" class="col-lg-7 col-md-12 col-sm-12"></div>
+        <div id="queues_info" class="col-lg-7 col-md-12 col-sm-12"></div>
         <div class="col-lg-5 col-md-12 col-sm-12">
-            <div class="card bg-light">
-                <div class="card-body">
-                    <canvas id="deviceStatus" class="col-lg-12 col-md-12 col-sm-12 mb-3 mt-3"></canvas>
+            <a href="{{ path('usmbsnmp_devices') }}">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <canvas id="device_status" class="col-lg-12 col-md-12 col-sm-12"></canvas>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
-        <canvas id="graph" class="col-lg-12 col-md-12 col-sm-12 mt-3"></canvas>
+        <canvas id="queue_graph" class="col-lg-12 col-md-12 col-sm-12 mt-3"></canvas>
     </div>
-
 {% endblock %}
 {% block css %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <script>
-
-    </script>
 {% endblock %}
 {% block scripts %}
-    <script>
-        //Device Chart offline/online
-        //Retrieve container element
-        var ctx_1 = document.getElementById("deviceStatus").getContext('2d');
-        //Load Chart
-        var deviceStatusChart = new Chart(ctx_1, {
-            type: 'doughnut',
-            data: {
-                labels: ['Online', 'Offline'],
-                datasets: [{
-                    label: 'Hosts Status',
-                    data: [ {{ online_device }}, {{ offline_device }}],
-                    backgroundColor: [
-                        'rgb(40,167,69)',
-                        'rgb(220,53,69)'
-                    ]
-                }]
-            },
-            options: {}
-        });
-    </script>
     <script src="{{ asset('bundles/usmbsnmp/js/dashboard.js') }}"></script>
 {% endblock %}

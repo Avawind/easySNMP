@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="361996f7-c1ef-401c-99ad-7009e9070848" name="SymfonyMySQL_Server" url="http://192.168.43.60">
-        <fileTransfer host="192.168.43.60" port="22" rootFolder="/var/www/easySNMP" accessType="SFTP">
+      <webServer id="361996f7-c1ef-401c-99ad-7009e9070848" name="SymfonyMySQL_Server" url="http://192.168.0.44">
+        <fileTransfer host="192.168.0.44" port="22" rootFolder="/var/www/easySNMP" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" shareSSLContext="true" />
           </advancedOptions>

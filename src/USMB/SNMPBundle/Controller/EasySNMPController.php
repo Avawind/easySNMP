@@ -40,11 +40,6 @@ class EasySNMPController extends Controller
      */
     public function dashboardAction(Request $request)
     {
-        //Tests :
-        //$this->get('monolog.logger.db')->error('something wrong happened ! =( ');
-        //$this->get('monolog.logger.db')->info('something  happened !');
-        //$this->get('usmbsnmp_monitor')->monitoring();
-
         $this->em = $this->getDoctrine()->getEntityManager();
         $repositoryDevice = $this->em->getRepository('USMBSNMPBundle:Device');
 
@@ -58,52 +53,21 @@ class EasySNMPController extends Controller
         ));
     }
 
+    public function monitorAction(){
+        $this->get('usmbsnmp_monitor')->monitoring();
+
+        return new JsonResponse(array("monitor" => "ok"));
+    }
+
     /**
      * API RabbitMq Management
      * @return JsonResponse
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function dashboardDataAction()
     {
-        //Params
-        $login = "monitoring";
-        $password = "monitoring";
-        $url_queues = "http://127.0.0.1:15672/api/queues";
-        $url_consumer =  "http://127.0.0.1:15672/api/consumers";
-
-        //Retrieve data in json
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url_queues);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
-        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        $output_queue = curl_exec($ch);
-        curl_setopt($ch, CURLOPT_URL, $url_consumer);
-        $output_consumer = curl_exec($ch);
-        curl_close($ch);
-
-        $jsonResponse = array();
-
-        //Decode data
-        $result_queue = json_decode($output_queue);
-        $result_consumer = json_decode($output_consumer);
-        //Parse data and construct jsonResponse
-        foreach ($result_queue as $queue) {
-            $jsonResponse[$queue->name] = array(
-                "status" => $queue->state,
-                "node" => $queue->node,
-                "queued_messages" => $queue->messages,
-                "consumer_isAlive" => false,
-                "nb_consumer" => 0
-            );
-        }
-        foreach ($result_consumer as $consumer) {
-            $queue_binding = $consumer->queue->name;
-            $jsonResponse[$queue_binding]["consumer_isAlive"] = true;
-            $jsonResponse[$queue_binding]["nb_consumer"] = intval($jsonResponse[$queue_binding]["nb_consumer"]) + 1;
-        }
-
-
-        return new JsonResponse($jsonResponse);
+        return new JsonResponse($this->get('usmbsnmp_monitor_rabbit_server')->monitorRabbitServer());
     }
 
     /**
@@ -111,9 +75,10 @@ class EasySNMPController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function startConsumerAction($id){
-        $path = str_replace('web','', getcwd());
-        exec("cd ".$path." && php bin/console rabbitmq:consumer ".$id."  > /dev/null &");
+
+        $this->get('usmbsnmp_monitor_rabbit_server')->startConsumer($id);
         $this->get('usmbsnmp_logging')->logInfo("Dashboard Action : Consumer added by ".$this->getUser()->getUsername()." for ".$id);
+
         return $this->redirectToRoute('usmbsnmp_dashboard');
     }
 
@@ -122,8 +87,10 @@ class EasySNMPController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function stopConsumerAction($id){
-        exec('kill -9 `ps aux | less | grep \'rabbitmq:consumer '.$id.'\' | grep -v grep | awk \'{print $2}\'`');
+
+        $this->get('usmbsnmp_monitor_rabbit_server')->closeConnections($id);
         $this->get('usmbsnmp_logging')->logCrit("Dashboard Action : All connections closed by ".$this->getUser()->getUsername());
+
         return $this->redirectToRoute('usmbsnmp_dashboard');
     }
 
@@ -380,14 +347,20 @@ class EasySNMPController extends Controller
             $userManager = $this->get('fos_user.user_manager');
             $datadForm = $form->getData();
 
+            $factory = $this->get('security.encoder_factory');
+
+            $encoder = $factory->getEncoder($user);
+            $user->setSalt(md5(time()));
+            $pass = $encoder->encodePassword($datadForm->getPassword(), $user->getSalt());
+
             $user->setUsername($datadForm->getUsername())
                 ->setEmail($datadForm->getEmail())
-                ->setPassword($datadForm->getPassword());
+                ->setPassword($pass)
+                ->setEnabled(true);
             foreach ($datadForm->getRoles() as $role) {
                 $user->addRole($role);
             }
             $userManager->updateUser($user);
-
 
             $this->get('monolog.logger.db')->info('User created or updated : ' . $user->getUsername() . ' by ' . $this->getUser()->getUsername());
 
@@ -409,7 +382,7 @@ class EasySNMPController extends Controller
     {
 
         $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->findUser($id);
+        $user = $userManager->findUserBy(array('id' => $id));
         $userManager->deleteUser($user);
 
         $this->get('monolog.logger.db')->info('User deleted : ' . $user->getUsername() . ' by ' . $this->getUser()->getUsername());

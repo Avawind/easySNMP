@@ -22,11 +22,10 @@
 
     {% endblock %}
 </head>
-
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
-        <img src="{{ asset('/bundles/usmbsnmp/image/usmb.ico') }}"  width="27" height="27">
+        <img src="{{ asset('/bundles/usmbsnmp/image/usmb.ico') }}" width="27" height="27">
         easySNMP</a>
     <ul class="navbar-nav px-10 mr-2">
         <li class="nav-item text-nowrap text-white">
@@ -68,7 +67,6 @@
                         </a>
                     </li>
                 </ul>
-
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                     <span>Manage</span>
                     <a class="d-flex align-items-center text-muted" href="#">
@@ -76,6 +74,7 @@
                     </a>
                 </h6>
                 <ul class="nav flex-column mb-2">
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MODERATEUR') %}
                     <li class="nav-item">
                         <a class="nav-link {% block activeManageDevices %} {% endblock %}"
                            href="{{ path('usmbsnmp_manage_devices') }}">
@@ -90,18 +89,21 @@
                             Profiles
                         </a>
                     </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link {% block activeManageUsers %} {% endblock %}"
+                               href="{{ path('usmbsnmp_manage_users') }}">
+                                <span data-feather="user"></span>
+                                Users
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link {% block activeManageLogs %} {% endblock %}"
                            href="{{ path('usmbsnmp_manage_logs') }}">
                             <span data-feather="file-text"></span>
                             Logs
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% block activeManageUsers %} {% endblock %}"
-                           href="{{ path('usmbsnmp_manage_users') }}">
-                            <span data-feather="user"></span>
-                            Users
                         </a>
                     </li>
                 </ul>
@@ -112,24 +114,26 @@
 
             {% endblock %}
         </main>
-        <!-- scripts -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-                crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-                integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-                crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-                integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-                crossorigin="anonymous"></script>
-        <!-- Icons -->
-        <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-        <script>
-            feather.replace()
-        </script>
-        {% block scripts %}
+    </div>
+</div>
+<!-- scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<!-- Icons -->
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+{% block scripts %}
 
-        {% endblock %}
+{% endblock %}
 </body>
 
 </html>
