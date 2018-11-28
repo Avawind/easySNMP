@@ -32,6 +32,17 @@ class EasySNMPController extends Controller
      */
     protected $em;
 
+    /**
+     * Monitoring call
+     * function only available by localhost
+     * Called by crontab cyclically
+     * @return JsonResponse
+     */
+    public function monitorAction(){
+        $this->get('usmbsnmp_monitor')->monitoring();
+
+        return new JsonResponse(array("monitor" => "ok"));
+    }
 
     /**
      *
@@ -53,14 +64,10 @@ class EasySNMPController extends Controller
         ));
     }
 
-    public function monitorAction(){
-        $this->get('usmbsnmp_monitor')->monitoring();
-
-        return new JsonResponse(array("monitor" => "ok"));
-    }
 
     /**
      * API RabbitMq Management
+     *  Return json data to update the dashboard
      * @return JsonResponse
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -73,6 +80,8 @@ class EasySNMPController extends Controller
     /**
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * Call monitoring service to start a consumer, for a given queue
      */
     public function startConsumerAction($id){
 
@@ -85,6 +94,8 @@ class EasySNMPController extends Controller
     /**
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * Call monitoring service to stop all the consumers running for a given queue
      */
     public function stopConsumerAction($id){
 
@@ -92,6 +103,17 @@ class EasySNMPController extends Controller
         $this->get('usmbsnmp_logging')->logCrit("Dashboard Action : All connections closed by ".$this->getUser()->getUsername());
 
         return $this->redirectToRoute('usmbsnmp_dashboard');
+    }
+
+    /**
+     * API Devices Status
+     *  Return json array of devices status to create alerts
+     *
+     * @return JsonResponse
+     */
+    public function alertsDataAction(){
+
+        return new JsonResponse($this->get('usmbsnmp_monitor_devices')->monitorDevice());
     }
 
     /**

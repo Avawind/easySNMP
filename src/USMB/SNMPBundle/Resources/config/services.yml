@@ -44,3 +44,8 @@ services:
     class: USMB\SNMPBundle\Services\Monitoring\RabbitServerMonitoring
     arguments:
      $entityManager: '@doctrine.orm.entity_manager'
+
+  usmbsnmp_monitor_devices:
+    class: USMB\SNMPBundle\Services\Monitoring\DevicesStatusMonitoring
+    arguments:
+      $entityManager: '@doctrine.orm.entity_manager'

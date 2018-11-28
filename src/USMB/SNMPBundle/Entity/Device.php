@@ -64,6 +64,7 @@ class Device
      * @var boolean
      *
      * @ORM\Column(name="isAlive", type="boolean", nullable=true)
+     *
      */
     private $isAlive;
 
@@ -214,6 +215,7 @@ class Device
      * @param boolean $isAlive
      *
      * @return Device
+     *
      */
     public function setIsAlive($isAlive)
     {
@@ -231,4 +233,5 @@ class Device
     {
         return $this->isAlive;
     }
+
 }

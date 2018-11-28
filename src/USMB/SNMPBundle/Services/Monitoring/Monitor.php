@@ -76,7 +76,7 @@ class Monitor
      *       total host check interval = (total check_interval of all hosts) * (check_interval)
      *
      * In this calculation whe considerate that the snmp_request delay is nullable (LAN).
-     * To avoid queue problems let's said we take 10% of margin.
+     * To avoid queue problems let's said we take 15% of margin.
      *
      *
      * @source https://assets.nagios.com/downloads/nagioscore/docs/nagioscore/4/en/checkscheduling.html
@@ -86,7 +86,7 @@ class Monitor
     public function interCheckDelayCalculation()
     {
         $nbRequestToSend = $this->entityManager->getRepository('USMBSNMPBundle:Device')->getNbRequestToSend();
-        $nbRequestToSend = $nbRequestToSend + $nbRequestToSend * 0.1;
+        $nbRequestToSend = $nbRequestToSend + $nbRequestToSend * 0.15;
         $total_host_check_inter = $nbRequestToSend * $this->check_inter;
         $total_host_check_inter = $total_host_check_inter * 60;
         $total_average_check_inter = $total_host_check_inter / $nbRequestToSend;

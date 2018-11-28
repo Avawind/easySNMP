@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="easySNMP">
-    <meta name="author" content="">
+    <meta name="author" content="T&C Team">
     <link rel="icon" href="">
 
     <title>easySNMP</title>
@@ -35,7 +35,7 @@
     </ul>
     <ul class="navbar-nav px-10 mr-2">
         <li class="nav-item text-nowrap text-white">
-            <a class="nav-link" href="{{ path('fos_user_security_logout') }}">Sign out</a>
+            <a class="nav-link" href="{{ path('fos_user_security_logout') }}"><span data-feather="log-out"></span> Sign out</a>
         </li>
     </ul>
 </nav>
@@ -107,6 +107,14 @@
                         </a>
                     </li>
                 </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Alerts</span>
+                    <a class="d-flex align-items-center text-muted" href="#">
+                        <span data-feather="bell"></span>
+                    </a>
+                </h6>
+                <ul id="alerts-list" class="nav flex-column mb-2">
+                </ul>
             </div>
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
@@ -128,6 +136,8 @@
         crossorigin="anonymous"></script>
 <!-- Icons -->
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<!-- Alerts -->
+<script src="{{ asset('bundles/usmbsnmp/js/alerts.js') }}"></script>
 <script>
     feather.replace()
 </script>

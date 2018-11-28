@@ -2,28 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e44a8639-a767-4389-9897-7df211278ad8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Resources/TwigBundle/views/Exception/error403.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/TwigBundle/views/Exception/error404.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/TwigBundle/views/Exception/error500.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/image/403_Error.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/image/404_Error.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/image/500_Error.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/RabbitServerMonitoring.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/js/alerts.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/DevicesStatusMonitoring.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/4a012d99-873d-4490-9642-7ba1e9363aa7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4a012d99-873d-4490-9642-7ba1e9363aa7.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/security.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/security.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Symfony_easySNMP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Symfony_easySNMP.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Controller/EasySNMPController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Controller/EasySNMPController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Repository/DeviceRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Repository/DeviceRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Entity/Device.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Entity/Device.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Repository/Device_1_Profile_2Repository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Repository/Device_1_Profile_2Repository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/config/routing.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/config/routing.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/config/services.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/config/services.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/js/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/js/dashboard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/dashboard.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/device.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/device.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/layout.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/layout.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/ICMPRequestConsumer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/ICMPRequestConsumer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/Monitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/Monitor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/SNMPRequestConsumer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/SNMPRequestConsumer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/SymfonyRequirements.php" beforeDir="false" afterPath="$PROJECT_DIR$/var/SymfonyRequirements.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/apple-touch-icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/web/apple-touch-icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/web/favicon.ico" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -81,16 +82,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/AppKernel.php" />
-        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Entity/1_1.php" />
-        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Repository/1_1Repository.php" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Entity/Log.php" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Handler/MonologDBHandler.php" />
         <option value="$PROJECT_DIR$/app/config/services.yml" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Repository/LogRepository.php" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/MonitoringConsumer.php" />
-        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/ICMPRequestConsumer.php" />
-        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Entity/Device.php" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/css/style.css" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Config/createTableCommand.php" />
         <option value="&lt;361996f7-c1ef-401c-99ad-7009e9070848&gt;/src/USMB/SNMPBundle/Controller/EasySNMPController.php" />
@@ -114,24 +110,29 @@
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Logging/Logging.php" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/device.html.twig" />
-        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/config/routing.yml" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/manageLogs.html.twig" />
-        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/config/services.yml" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/devices.html.twig" />
-        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/js/dashboard.js" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Repository/DeviceRepository.php" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/SNMPRequestConsumer.php" />
-        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/Monitor.php" />
-        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/dashboard.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/TwigBundle/views/Exception/error404.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/TwigBundle/views/Exception/error403.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/TwigBundle/views/Exception/error500.html.twig" />
-        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Controller/EasySNMPController.php" />
-        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/layout.html.twig" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/manageDevices.html.twig" />
         <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/manageProfils.html.twig" />
-        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/RabbitServerMonitoring.php" />
         <option value="$PROJECT_DIR$/app/config/security.yml" />
+        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/dashboard.html.twig" />
+        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/Monitor.php" />
+        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/RabbitServerMonitoring.php" />
+        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Entity/Device.php" />
+        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/config/services.yml" />
+        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/config/routing.yml" />
+        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Controller/EasySNMPController.php" />
+        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/layout.html.twig" />
+        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/DevicesStatusMonitoring.php" />
+        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/ICMPRequestConsumer.php" />
+        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/js/dashboard.js" />
+        <option value="$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/js/alerts.js" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
       </list>
     </option>
   </component>
@@ -179,6 +180,8 @@
       <path value="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle" />
       <path value="$PROJECT_DIR$/vendor/php-amqplib/php-amqplib" />
       <path value="$PROJECT_DIR$/vendor/php-amqplib/rabbitmq-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/process" />
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
@@ -192,7 +195,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -204,40 +206,6 @@
               <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
               <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="TwigBundle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="TwigBundle" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
@@ -280,6 +248,15 @@
               <item name="USMB" type="462c0819:PsiDirectoryNode" />
               <item name="SNMPBundle" type="462c0819:PsiDirectoryNode" />
               <item name="Resources" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="USMB" type="462c0819:PsiDirectoryNode" />
+              <item name="SNMPBundle" type="462c0819:PsiDirectoryNode" />
+              <item name="Resources" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -289,7 +266,8 @@
               <item name="USMB" type="462c0819:PsiDirectoryNode" />
               <item name="SNMPBundle" type="462c0819:PsiDirectoryNode" />
               <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
@@ -299,7 +277,6 @@
               <item name="SNMPBundle" type="462c0819:PsiDirectoryNode" />
               <item name="Resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="SNMPBundle" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
@@ -308,6 +285,15 @@
               <item name="USMB" type="462c0819:PsiDirectoryNode" />
               <item name="SNMPBundle" type="462c0819:PsiDirectoryNode" />
               <item name="Services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="USMB" type="462c0819:PsiDirectoryNode" />
+              <item name="SNMPBundle" type="462c0819:PsiDirectoryNode" />
+              <item name="Services" type="462c0819:PsiDirectoryNode" />
+              <item name="Logging" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
@@ -321,41 +307,24 @@
             <path>
               <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
               <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="var" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
+              <item name="var" type="462c0819:PsiDirectoryNode" />
+              <item name="cache" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
               <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="bundles" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="bundles" type="462c0819:PsiDirectoryNode" />
-              <item name="usmbsnmp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="bundles" type="462c0819:PsiDirectoryNode" />
-              <item name="usmbsnmp" type="462c0819:PsiDirectoryNode" />
-              <item name="image" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Symfony_easySNMP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symfony_easySNMP" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="bundles" type="462c0819:PsiDirectoryNode" />
-              <item name="usmbsnmp" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -369,7 +338,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../../AndroidSDK" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543169556343" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543433777993" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -380,6 +349,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Documents\projetsDev\IntelliJ\Symfony_easySNMP\web" />
       <recent name="F:\Documents\projetsDev\IntelliJ\Symfony_easySNMP\src\USMB\SNMPBundle\Resources\public\image" />
     </key>
   </component>
@@ -452,12 +422,14 @@
       <workItem from="1542993320673" duration="20192000" />
       <workItem from="1543062325165" duration="9464000" />
       <workItem from="1543143355641" duration="105000" />
-      <workItem from="1543143521132" duration="19611000" />
+      <workItem from="1543143521132" duration="20232000" />
+      <workItem from="1543176388580" duration="1807000" />
+      <workItem from="1543419648475" duration="13947000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="189610000" />
+    <option name="totallyTimeSpent" value="205985000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -469,7 +441,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="Image Layers" order="1" />
@@ -477,9 +449,9 @@
       <window_info id="UI Designer" order="3" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="Learn" order="5" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.15831557" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.27458397" />
       <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
-      <window_info id="Remote Host" order="8" weight="0.18496802" />
+      <window_info id="Remote Host" order="8" weight="0.18456884" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49924356" weight="0.040983606" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -488,8 +460,8 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49924356" weight="0.3295082" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49924356" weight="0.17028199" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5079957" side_tool="true" weight="0.1375948" />
-      <window_info anchor="bottom" id="File Transfer" order="9" sideWeight="0.49200428" visible="true" weight="0.24593717" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50907713" side_tool="true" visible="true" weight="0.04255319" />
+      <window_info anchor="bottom" id="File Transfer" order="9" sideWeight="0.49092284" visible="true" weight="0.04255319" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
       <window_info anchor="bottom" id="Version Control" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Console" order="12" sideWeight="0.49200428" weight="0.060737528" />
@@ -499,7 +471,7 @@
       <window_info anchor="right" id="Theme Preview" order="1" />
       <window_info anchor="right" id="Capture Analysis" order="2" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Database" order="4" weight="0.39824945" />
+      <window_info anchor="right" id="Database" order="4" weight="0.25718608" />
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
@@ -544,78 +516,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="uml://DATABASE/4a012d99-873d-4490-9642-7ba1e9363aa7.SCHEMA:easySNMPBDD">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>DATABASE</ID>
-          <OriginalElement>4a012d99-873d-4490-9642-7ba1e9363aa7.SCHEMA:easySNMPBDD</OriginalElement>
-          <nodes>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_4_Profile_2</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_4_Profile_1</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_7_Profile_2</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_7_Profile_1</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_1_Profile_9</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.user</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_1_Profile_7</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_1_Profile_6</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_1_Profile_5</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_1_Profile_4</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_1_Profile_3</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_1_Profile_2</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.log</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.profile</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.usmb_device_profiles</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_4_Profile_3</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_2_Profile_5</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_2_Profile_4</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_2_Profile_3</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_2_Profile_2</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_2_Profile_1</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_1_Profile_1</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_4_Profile_5</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_7_Profile_9</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_4_Profile_6</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.device</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_4_Profile_4</node>
-            <node x="" y="">4a012d99-873d-4490-9642-7ba1e9363aa7.TABLE:easySNMPBDD.Device_4_Profile_7</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="0.7998037291462218" x="289.0" y="290.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Key columns</Category>
-            <Category>Columns</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://4a012d99-873d-4490-9642-7ba1e9363aa7/schema/easySNMPBDD/table/Device_1_Profile_1">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Services/RabbitAPI/RabbitAPI.php" />
-    <entry file="file://$PROJECT_DIR$/composer.lock">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="32" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/services.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="39" column="56" lean-forward="true" selection-start-line="39" selection-start-column="56" selection-end-line="39" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/config.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="314">
@@ -649,13 +549,6 @@
         <state relative-caret-position="-2715" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Logging/Logging.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="841">
-          <caret line="99" column="32" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Config/Config.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="841">
@@ -670,20 +563,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/manageDevice.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="16" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/config/routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/manageLogs.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="782">
@@ -691,13 +570,6 @@
           <folding>
             <element signature="e#87#119#0#Twig" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/config/services.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="614">
-          <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -750,38 +622,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/device.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2167">
-          <caret line="148" column="9" selection-start-line="148" selection-start-column="9" selection-end-line="148" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://4a012d99-873d-4490-9642-7ba1e9363aa7/schema/easySNMPBDD/table/device">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Entity/Profile.php">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Entity/Device.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-850" />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Repository/ProfileRepository.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="das://4a012d99-873d-4490-9642-7ba1e9363aa7/schema/easySNMPBDD/table/usmb_advert_category">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://4a012d99-873d-4490-9642-7ba1e9363aa7/schema/easySNMPBDD/table/usmb_advert_category" />
     <entry file="das://4a012d99-873d-4490-9642-7ba1e9363aa7/schema/easySNMPBDD/table/usmb_device_profiles">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -803,13 +650,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/ICMPRequestConsumer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="14" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/SNMPRequestConsumer.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="730">
@@ -820,29 +660,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/Monitor.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-967">
-          <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/js/dashboard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3502">
-          <caret line="206" column="30" selection-start-line="206" selection-start-column="30" selection-end-line="206" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Repository/DeviceRepository.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="461">
           <caret line="62" column="9" lean-forward="true" selection-start-line="62" selection-start-column="9" selection-end-line="62" selection-end-column="9" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/favicon.ico">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/TwigBundle/views/Exception/error404.html.twig">
       <provider selected="true" editor-type-id="text-editor">
@@ -872,23 +695,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/layout.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="75" column="49" selection-start-line="75" selection-start-column="49" selection-end-line="75" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Controller/EasySNMPController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2654">
-          <caret line="362" column="44" selection-start-line="362" selection-start-column="44" selection-end-line="362" selection-end-column="44" />
-          <folding>
-            <element signature="e#6#96#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/manageDevices.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -903,27 +709,168 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/dashboard.html.twig">
+    <entry file="file://$PROJECT_DIR$/app/config/security.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="16" lean-forward="true" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+        <state relative-caret-position="597">
+          <caret line="41" column="2" selection-start-line="41" selection-start-column="2" selection-end-line="41" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/apple-touch-icon.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/favicon.ico">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/device.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2516">
+          <caret line="148" column="9" selection-start-line="148" selection-start-column="9" selection-end-line="148" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/manageDevice.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="6" column="16" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Entity/Device_1_Profile_1.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-510" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Entity/Device_1_Profile_4.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="38" selection-start-line="38" selection-end-line="40" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/RabbitServerMonitoring.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="96" column="39" selection-start-line="96" selection-start-column="39" selection-end-line="96" selection-end-column="39" />
+        <state relative-caret-position="-1020">
+          <caret line="10" selection-start-line="10" selection-end-line="10" selection-end-column="31" />
           <folding>
             <element signature="e#6#94#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/security.yml">
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/config/routing.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="41" column="2" selection-start-line="41" selection-start-column="2" selection-end-line="41" selection-end-column="2" />
+        <state relative-caret-position="197">
+          <caret line="22" column="28" lean-forward="true" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Controller/EasySNMPController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="110" column="6" selection-start-line="110" selection-start-column="6" selection-end-line="110" selection-end-column="6" />
+          <folding>
+            <element signature="e#6#96#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/layout.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/views/SNMPBundle/dashboard.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="97" selection-start-line="16" selection-start-column="97" selection-end-line="16" selection-end-column="97" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Entity/Device.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3128">
+          <caret line="235" selection-start-line="235" selection-end-line="235" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://4a012d99-873d-4490-9642-7ba1e9363aa7/schema/easySNMPBDD/table/log">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/config/services.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="650">
+          <caret line="48" column="70" selection-start-line="48" selection-start-column="70" selection-end-line="48" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/DevicesStatusMonitoring.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Logging/Logging.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="696">
+          <caret line="99" column="32" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/ICMPRequestConsumer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="48" column="23" selection-start-line="48" selection-start-column="23" selection-end-line="48" selection-end-column="23" />
+          <folding>
+            <element signature="e#6#92#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/js/dashboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="199" column="188" selection-start-line="199" selection-start-column="188" selection-end-line="199" selection-end-column="188" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Services/Monitoring/Monitor.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-349">
+          <caret line="88" column="69" selection-start-line="88" selection-start-column="69" selection-end-line="88" selection-end-column="69" />
+          <folding>
+            <element signature="e#6#94#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://4a012d99-873d-4490-9642-7ba1e9363aa7/schema/easySNMPBDD/table/device">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/USMB/SNMPBundle/Resources/public/js/alerts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="47" column="50" lean-forward="true" selection-start-line="47" selection-start-column="50" selection-end-line="47" selection-end-column="50" />
+          <folding>
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+            <element signature="e#216#223#1" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+            <element signature="e#217#224#1" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -7,7 +7,7 @@ usmbsnmp_dashboard:
 
 #dashboard data
 usmbsnmp_start_consumer:
-    path:     //Consumer/Start/{id}
+    path:     /Consumer/Start/{id}
     defaults: { _controller: USMBSNMPBundle:EasySNMP:startConsumer }
 
 #dashboard start consumer
@@ -15,10 +15,15 @@ usmbsnmp_stop_consumer:
     path:     /Consumer/Stop/{id}
     defaults: { _controller: USMBSNMPBundle:EasySNMP:stopConsumer }
 
-#dashboard stop consumer
+#dashboard rabbitmq server data api
 usmbsnmp_dashboard_data:
-    path:     /data
+    path:     /data/dashboard
     defaults: { _controller: USMBSNMPBundle:EasySNMP:dashboardData }
+
+#dashboard devices infos api
+usmbsnmp_alerts_data:
+    path:     /data/alerts
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:alertsData }
 
 #mlaunch monitoring
 usmbsnmp_monitor:

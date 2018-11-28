@@ -43,9 +43,10 @@ class ICMPRequestConsumer implements ConsumerInterface
     {
         $body = $request->getBody();
         $body = unserialize($body);
+
         //Process icmp request.
         //$request will be an instance of `PhpAmqpLib\Message\AMQPMessage` with the $request->body being the data sent over RabbitMQ.
-        exec("ping -c 1 ".$body['host'], $output,$status);
+        exec("ping -c 2 ".$body['host'], $output,$status);
 
         if (0 == $status) {
             $result = true;
