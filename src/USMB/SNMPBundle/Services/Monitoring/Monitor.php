@@ -140,7 +140,11 @@ class Monitor
                         'profileName' => $profile->getName(),
                         'host' => $device->getHost(),
                         'community' => $device->getCommunity(),
-                        'oid' => $profile->getOid()
+                        'oid' => $profile->getOid(),
+                        'version' => $device->getVersion(),
+                        'user' => $device->getUser(),
+                        'password' => $device->getPassword(),
+                        'cryptoKey' => $device->getCryptoKey()
                     );
                     //Send request params to queue
                     $this->old_sound_rabbit_mq->publish(serialize($requestSNMP), 'snmp_request_queue');

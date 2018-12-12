@@ -61,6 +61,34 @@ class Device
     private $community;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="user", type="string", length=255, nullable=true)
+     */
+    private $user;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255, nullable=true)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="version", type="string", length=255, nullable=true)
+     */
+    private $version;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cryptoKey", type="string", length=255, nullable=true)
+     */
+    private $cryptoKey;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="isAlive", type="boolean", nullable=true)
@@ -234,4 +262,100 @@ class Device
         return $this->isAlive;
     }
 
+
+    /**
+     * Set user
+     *
+     * @param string $user
+     *
+     * @return Device
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return Device
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set version
+     *
+     * @param string $version
+     *
+     * @return Device
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+
+        return $this;
+    }
+
+    /**
+     * Get version
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * Set cryptoKey
+     *
+     * @param string $cryptoKey
+     *
+     * @return Device
+     */
+    public function setCryptoKey($cryptoKey)
+    {
+        $this->cryptoKey = $cryptoKey;
+
+        return $this;
+    }
+
+    /**
+     * Get cryptoKey
+     *
+     * @return string
+     */
+    public function getCryptoKey()
+    {
+        return $this->cryptoKey;
+    }
 }

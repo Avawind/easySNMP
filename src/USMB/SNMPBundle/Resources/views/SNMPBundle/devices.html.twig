@@ -11,6 +11,7 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Version</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Host</th>
                 <th scope="col">Emplacement</th>
@@ -22,6 +23,8 @@
             {% for device in devices %}
                 <tr>
                     <th scope="row">{{ device.id }}</th>
+
+                    <td>{{ device.version }}</td>
                     <td>{{ device.name }}</td>
                     <td>{{ device.host }}</td>
                     <td>{{ device.location }}</td>

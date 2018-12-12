@@ -16,8 +16,14 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\MimeType\FileinfoMimeTypeGuesser;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use USMB\UserBundle\Entity\User;
 
 
@@ -38,16 +44,89 @@ class EasySNMPController extends Controller
      * Called by crontab cyclically
      * @return JsonResponse
      */
-    public function monitorAction(){
+    public function monitorAction()
+    {
         $this->get('usmbsnmp_monitor')->monitoring();
 
         return new JsonResponse(array("monitor" => "ok"));
     }
 
     /**
+     * Export a screenshot of the database in a json format
+     * Call a config method function to generate the json array
+     * @return BinaryFileResponse
+     */
+    public function exportJsonAction()
+    {
+        $jsonContent = $this->get('usmbsnmp_config')->exportJSON();
+        $path = getcwd();
+        $filename = 'config.json';
+        $filePath = $path . '/bundles/usmbsnmp/public-ressources/' . $filename;
+        $file = fopen($filePath, 'wa+');
+        fwrite($file, json_encode($jsonContent));
+        fclose($file);
+
+        // This should return the file to the browser as response
+        $response = new BinaryFileResponse($filePath);
+
+        // To generate a file download, you need the mimetype of the file
+        $mimeTypeGuesser = new FileinfoMimeTypeGuesser();
+
+        // Set the mimetype with the guesser or manually
+        if ($mimeTypeGuesser->isSupported()) {
+            // Guess the mimetype of the file according to the extension of the file
+            $response->headers->set('Content-Type', $mimeTypeGuesser->guess($filePath));
+        } else {
+            // Set the mimetype of the file manually, in this case for a text file is text/plain
+            $response->headers->set('Content-Type', 'text/plain');
+        }
+
+        // Set content disposition inline of the file
+        $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $filename
+        );
+
+        return $response;
+    }
+
+    /**
+     * Import Json config file
+     * Call a config module method to add new object in BDD or update them
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function importJsonAction(Request $request)
+    {
+
+        if ($request->isMethod('POST')) {
+            $data = $request->request->get('jsonContentButton');
+            // decode the JSON data
+            // set second parameter boolean TRUE for associative array output.
+            $json = json_decode($data);
+
+            if (json_last_error() == JSON_ERROR_NONE) {
+                // JSON is valid
+                $this->get('usmbsnmp_config')->importJSON($json);
+                return $this->redirectToRoute('usmbsnmp_manage_logs');
+            }
+            if (json_last_error() == JSON_ERROR_SYNTAX) {
+                // JSON is valid
+                throw new HttpException(500, "Error while processing the json, please check out the format.");
+            }
+
+        }
+
+
+    }
+
+    /**
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function dashboardAction(Request $request)
     {
@@ -83,10 +162,11 @@ class EasySNMPController extends Controller
      *
      * Call monitoring service to start a consumer, for a given queue
      */
-    public function startConsumerAction($id){
+    public function startConsumerAction($id)
+    {
 
         $this->get('usmbsnmp_monitor_rabbit_server')->startConsumer($id);
-        $this->get('usmbsnmp_logging')->logInfo("Dashboard Action : Consumer added by ".$this->getUser()->getUsername()." for ".$id);
+        $this->get('usmbsnmp_logging')->logInfo("Dashboard Action : Consumer added by " . $this->getUser()->getUsername() . " for " . $id);
 
         return $this->redirectToRoute('usmbsnmp_dashboard');
     }
@@ -97,10 +177,11 @@ class EasySNMPController extends Controller
      *
      * Call monitoring service to stop all the consumers running for a given queue
      */
-    public function stopConsumerAction($id){
+    public function stopConsumerAction($id)
+    {
 
         $this->get('usmbsnmp_monitor_rabbit_server')->closeConnections($id);
-        $this->get('usmbsnmp_logging')->logCrit("Dashboard Action : All connections closed by ".$this->getUser()->getUsername());
+        $this->get('usmbsnmp_logging')->logCrit("Dashboard Action : All connections closed by " . $this->getUser()->getUsername());
 
         return $this->redirectToRoute('usmbsnmp_dashboard');
     }
@@ -111,7 +192,8 @@ class EasySNMPController extends Controller
      *
      * @return JsonResponse
      */
-    public function alertsDataAction(){
+    public function alertsDataAction()
+    {
 
         return new JsonResponse($this->get('usmbsnmp_monitor_devices')->monitorDevice());
     }
@@ -120,7 +202,7 @@ class EasySNMPController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * Return the devices list in the view (Discovery, not manage)
+     * Retrieve the devices list an return the view (Discovery, not manage)
      */
     public function devicesAction(Request $request)
     {
@@ -135,6 +217,9 @@ class EasySNMPController extends Controller
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * Create the data array to generate view's Charts and Cards  and return the view
+     *
      */
     public function deviceAction(Request $request, $id)
     {
@@ -174,7 +259,7 @@ class EasySNMPController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * Return the devices list in the view (Manage, not discover)
+     * Retrieve the devices list and return the view (Manage, not discover)
      *
      */
     public function manageDevicesAction(Request $request)
@@ -194,6 +279,7 @@ class EasySNMPController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      */
     public function manageDeviceAction(Request $request, $id)
     {
@@ -257,6 +343,7 @@ class EasySNMPController extends Controller
      * Return the form of profile in the view
      *
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      */
     public function manageProfileAction(Request $request, $id)
     {
@@ -305,14 +392,6 @@ class EasySNMPController extends Controller
         ));
     }
 
-    /**
-     * @param Request $request
-     * @param $id
-     */
-    public function manageLogAction(Request $request, $id)
-    {
-
-    }
 
     /**
      * @param Request $request
@@ -335,7 +414,7 @@ class EasySNMPController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     *
+     *  Create and modify Users
      *
      */
     public function manageUserAction(Request $request, $id)

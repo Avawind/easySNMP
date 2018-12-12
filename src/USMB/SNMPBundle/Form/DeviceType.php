@@ -9,6 +9,7 @@
 namespace USMB\SNMPBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -32,6 +33,15 @@ class DeviceType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true
             ))
+            ->add('version', ChoiceType::class, array(
+                'choices' => array(
+                    'v2' => 'V2',
+                    'v3' => 'V3'
+                ),
+            ))
+            ->add('user', TextType::class)
+            ->add('password', TextType::class)
+            ->add('cryptoKey', TextType::class)
             ->add('save', SubmitType::class);
     }
 }

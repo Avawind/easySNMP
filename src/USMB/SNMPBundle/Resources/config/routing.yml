@@ -45,6 +45,15 @@ usmbsnmp_manage_devices:
     path:     /Manage/Devices
     defaults: { _controller: USMBSNMPBundle:EasySNMP:manageDevices }
 
+#manage devices download file
+usmbsnmp_manage_devices_download_config_file:
+    path:     /Manage/Devices/download
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:exportJson }
+
+usmbsnmp_manage_devices_upload_config_file:
+    path:     /Manage/Devices/upload
+    defaults: { _controller: USMBSNMPBundle:EasySNMP:importJson }
+
 #manage device
 usmbsnmp_manage_device:
     path:     /Manage/Device/{id}
@@ -74,11 +83,6 @@ usmbsnmp_delete_profile:
 usmbsnmp_manage_logs:
     path:     /Manage/Logs
     defaults: { _controller: USMBSNMPBundle:EasySNMP:manageLogs }
-
-#manage log
-usmbsnmp_manage_log:
-    path:     /Manage/Log/{id}
-    defaults: { _controller: USMBSNMPBundle:EasySNMP:manageLog }
 
 #manage users
 usmbsnmp_manage_users:

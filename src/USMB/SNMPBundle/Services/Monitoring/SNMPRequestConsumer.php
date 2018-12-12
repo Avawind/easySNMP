@@ -50,14 +50,18 @@ class SNMPRequestConsumer implements ConsumerInterface
         //Process snmp request.
         //$request will be an instance of `PhpAmqpLib\Message\AMQPMessage` with the $request->body being the data sent over RabbitMQ.
         try {
-            $result = snmp2_get($body['host'], $body['community'], $body['oid'], 1000000, 0);
+            if($body['version'] === 'V2') {
+                $result = snmp2_get($body['host'], $body['community'], $body['oid'], 1000000, 0);
+            }else {
+                $result = snmp3_get($body['host'], $body['user'],'authPriv', 'SHA', $body['password'], 'AES', $body['cryptoKey'], $body['oid'] );
+            }
             $this->logging_service->logSNMP($result, $body['idDevice'], $body['idProfile']);
         } catch (\Exception $e){
             $error = "SNMP Error - Device : ".$body['deviceName']." Profile : ".$body['profileName']." Message : ".$e->getMessage();
             $this->logging_service->logError($error);
 
             //Requeue the request
-            //return false;
+            //return false;snmp3_get($ip, $cm, 'authPriv', $comms[$cm]['aprot'], $comms[$cm]['apass'], $comms[$cm]['pprot'], $comms[$cm]['ppass'], ".{$oid}", $t, $r);
 
             //Avoid endless queued task
             return true;
