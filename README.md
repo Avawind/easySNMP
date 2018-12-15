@@ -12,7 +12,7 @@ Pour une meilleur compréhension de l'architecture MVC et des Bundles d'une appl
  : https://symfony.com/what-is-symfony 
 
 
-La sécurité est gérée par le Bundle **FOSUserBundle** : https://github.com/FriendsOfSymfony/FOSUserBundle
+Les utilisateurs sont gérés par le Bundle **FOSUserBundle** : https://github.com/FriendsOfSymfony/FOSUserBundle
 
 La communication avec le serveur de Queue est gérée par **OldSound\RabbitMqBundle** : https://github.com/php-amqplib/RabbitMqBundle
 
