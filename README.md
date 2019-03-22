@@ -24,9 +24,6 @@ Le nom des dossiers le constituant sont exhaustifs. Les "modules" sont situés d
 
 Les commentaires sont rédigés en anglais.
 
-Le pseudo **Avawind** correspond à **Théo Foissard** : https://github.com/Avawind
-
-
 Les classes intéressantes :
 
 - Le Controller 
